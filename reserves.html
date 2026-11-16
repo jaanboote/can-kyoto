@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reserves · Can Kyoto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reserves.css">
+</head>
+<body>
+  <header class="cap">
+    <a href="index.html" class="marca" aria-label="Can Kyoto, inici">CAN<br>KY<span class="o">O</span>TO</a>
+    <nav>
+      <a href="reserves.html" class="actiu">Reserves</a>
+      <a href="index.html">Menú</a>
+      <a href="index.html#contacte">Contacte</a>
+    </nav>
+  </header>
+
+  <main class="pagina">
+    <section class="targeta" aria-live="polite">
+
+      <!-- Pas 1: persones, data i torn -->
+      <form id="pas1" class="pas">
+        <h2><span class="ico">👥</span> Persones</h2>
+        <div class="opcions" id="persones"></div>
+
+        <h2><span class="ico">📅</span> Data</h2>
+        <div class="opcions" id="dies"></div>
+
+        <h2><span class="ico">🕒</span> Reserva per</h2>
+        <div class="torns" id="torns"></div>
+
+        <button type="submit" class="continuar">Continuar</button>
+      </form>
+
+      <!-- Pas 2: hora i taula -->
+      <form id="pas2" class="pas" hidden>
+        <p class="resum" id="resum2"></p>
+        <h2><span class="ico">🕒</span> Hora</h2>
+        <div class="opcions" id="hores"></div>
+
+        <h2><span class="ico">🍽️</span> Tria la taula</h2>
+        <div class="llegenda">
+          <span><i class="punt lliure"></i> Lliure</span>
+          <span><i class="punt ocupada"></i> Ocupada</span>
+          <span><i class="punt petita"></i> Massa petita</span>
+          <span class="directe"><i class="punt viu"></i> En directe</span>
+        </div>
+        <div class="mapa-scroll">
+          <div class="mapa" id="mapa">
+            <div class="zona entrada">Entrada</div>
+            <div class="zona barra">Barra</div>
+          </div>
+        </div>
+
+        <div class="botons">
+          <button type="button" class="tornar" data-anar="pas1">Enrere</button>
+          <button type="submit" class="continuar">Continuar</button>
+        </div>
+      </form>
+
+      <!-- Pas 3: dades del client -->
+      <form id="pas3" class="pas" hidden>
+        <p class="resum" id="resum3"></p>
+        <label>Nom i cognoms <input name="nom" required autocomplete="name"></label>
+        <label>Telèfon <input name="telefon" type="tel" required autocomplete="tel" pattern="[0-9 +]{9,15}"></label>
+        <label>Correu electrònic <input name="correu" type="email" required autocomplete="email"></label>
+        <label>Comentaris (al·lèrgies, celebracions...) <textarea name="comentaris" rows="3"></textarea></label>
+        <label class="check"><input type="checkbox" required> Accepto la política de privacitat (RGPD)</label>
+        <div class="botons">
+          <button type="button" class="tornar" data-anar="pas2">Enrere</button>
+          <button type="submit" class="continuar">Confirmar reserva</button>
+        </div>
+      </form>
+
+      <!-- Confirmació -->
+      <div id="fet" class="pas" hidden>
+        <h2>Reserva confirmada ✔</h2>
+        <p id="resumFet"></p>
+        <p class="nota">Recorda que Can Kyoto és un local només per a adults.</p>
+        <button type="button" class="continuar" id="nova">Fer una altra reserva</button>
+      </div>
+    </section>
+
+    <aside class="info">
+      <img src="img/sala.jpg" alt="Sala de Can Kyoto amb una taula de fusta sota un llum càlid">
+      <div class="bloc">
+        <h3><span class="ico">🕒</span> Horaris</h3>
+        <p><strong>Dinar</strong><br>13:00 – 16:45</p>
+        <p><strong>Sopar</strong><br>17:00 – 22:30</p>
+      </div>
+      <div class="bloc">
+        <h3><span class="ico">📍</span> Ubicació</h3>
+        <p>Gran Via de les Corts Catalanes<br>Poblenou, Barcelona</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="peu">
+    <span class="marca petita">CAN<br>KY<span class="o">O</span>TO</span>
+    <p>Cuina mediterrània i japonesa, amb ànima.</p>
+  </footer>
+
+  <script src="js/reserves.js"></script>
+</body>
+</html>
