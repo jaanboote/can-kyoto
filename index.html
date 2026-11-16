@@ -4,39 +4,100 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Can Kyoto, restaurant de fusió mediterrània i japonesa</title>
-  <meta name="description" content="Can Kyoto, restaurant de fusió mediterrània i japonesa al Poblenou, Barcelona.">
+  <meta name="description" content="Can Kyoto, restaurant de fusió mediterrània i japonesa al Poblenou, Barcelona. Només per a adults.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Ubuntu:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Ubuntu:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="hero">
-    <img src="img/logotip.png" alt="Logotip de Can Kyoto" class="logo">
-    <p class="subtitol">Restaurant de fusió mediterrània i japonesa</p>
-    <a href="reserves.html" class="boto">Reserva</a>
+    <nav class="nav-portada" aria-label="Navegació principal">
+      <a href="#cuina">La cuina</a>
+      <a href="#taula">La taula</a>
+      <a href="#on-som">On som</a>
+      <a href="reserves.html" class="nav-reserva">Reserva</a>
+    </nav>
+
+    <div class="hero-centre">
+      <img src="img/logotip.png" alt="Can Kyoto" class="logo">
+      <p class="subtitol">Restaurant de fusió mediterrània i japonesa</p>
+      <div class="hero-botons">
+        <a href="reserves.html" class="boto">Reserva taula</a>
+        <a href="#cuina" class="boto boto-linia">Descobreix-nos</a>
+      </div>
+    </div>
+
+    <p class="hero-peu">Poblenou, Barcelona</p>
   </header>
 
   <main>
-    <section class="bloc">
-      <h2>Qui som</h2>
-      <p>Can Kyoto combina els sabors de la cuina mediterrània amb les tècniques i l'estètica japoneses. Som un local només per a adults, pensat per a sopars tranquils, celebracions i àpats d'empresa.</p>
+    <section class="seccio" id="cuina">
+      <div class="dues-col">
+        <div>
+          <p class="avantitol">La cuina</p>
+          <h2>El Mediterrani amb tècnica japonesa</h2>
+          <p>A Can Kyoto cuinem producte d'aquí amb tècniques i estètica japoneses. El resultat és una carta de fusió pensada per a sopars tranquils, celebracions i àpats d'empresa.</p>
+          <p>Treballem amb producte de proximitat i col·laborem amb Too Good To Go per no llençar menjar.</p>
+        </div>
+        <img src="img/sala.jpg" alt="Taula de fusta de la sala de Can Kyoto sota un llum càlid" class="foto">
+      </div>
     </section>
 
-    <section class="bloc fosc">
+    <section class="seccio fosc" id="taula">
+      <p class="avantitol">El nostre segell</p>
       <h2>Una taula que et reconeix</h2>
-      <p>Cada taula té un sensor que detecta quan us asseieu. La llum s'adapta a vosaltres i a la web es veu en directe quines taules estan lliures.</p>
+      <div class="passos">
+        <article class="pas-info">
+          <span class="num">1</span>
+          <h3>T'asseus</h3>
+          <p>Un sensor a la taula detecta que hi ha algú, sense càmeres.</p>
+        </article>
+        <article class="pas-info">
+          <span class="num">2</span>
+          <h3>La llum s'adapta</h3>
+          <p>La llum passa de mode repòs a llum d'acollida, càlida i només per a la vostra taula.</p>
+        </article>
+        <article class="pas-info">
+          <span class="num">3</span>
+          <h3>La sala, en directe</h3>
+          <p>La web mostra quines taules estan lliures en temps real, i ho veus abans de reservar.</p>
+        </article>
+      </div>
+      <a href="reserves.html" class="boto">Mira les taules lliures</a>
     </section>
 
-    <section class="bloc" id="contacte">
-      <h2>On som</h2>
-      <p>Gran Via de les Corts Catalanes, Poblenou (Barcelona)</p>
-      <p>Preu mitjà: 50-70 € per persona</p>
+    <section class="seccio">
+      <div class="xifres">
+        <div><b>46</b><span>comensals a la sala</span></div>
+        <div><b>8</b><span>places a la barra</span></div>
+        <div><b>50-70 €</b><span>preu mitjà per persona</span></div>
+        <div><b>+18</b><span>local només per a adults</span></div>
+      </div>
+    </section>
+
+    <section class="seccio gris" id="on-som">
+      <div class="dues-col">
+        <div>
+          <p class="avantitol">On som</p>
+          <h2>Al cor del Poblenou</h2>
+          <p>Gran Via de les Corts Catalanes, Poblenou (Barcelona), a tocar de Glòries.</p>
+          <p>Hi arribes fàcilment amb metro, tramvia, autobús o Bicing. A prop hi ha el Parc Central del Poblenou i aparcaments públics.</p>
+        </div>
+        <div class="horaris">
+          <h3>Horaris</h3>
+          <p><strong>Dinar</strong> 13:00 – 16:45</p>
+          <p><strong>Sopar</strong> 17:00 – 22:30</p>
+          <a href="reserves.html" class="boto">Reserva taula</a>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="peu-portada">
-    <p>© 2026 Can Kyoto. Projecte ASIX 0379</p>
+    <img src="img/logotip.png" alt="Can Kyoto" class="logo-peu">
+    <p>Cuina mediterrània i japonesa, amb ànima.</p>
+    <p class="petit">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
   </footer>
 </body>
 </html>
