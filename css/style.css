@@ -1,7 +1,20 @@
+/* ==========================================================
+   Can Kyoto: full d'estils únic de tota la web
+   ========================================================== */
+
 :root {
-  --blanc: #FFFFFF;
   --negre: #0B0B0B;
+  --blanc: #FFFFFF;
   --vermell: #BC002D;
+  --vermell-fosc: #8F0022;
+  --fons: #F5F6F8;
+  --vora: #DADDE2;
+  --gris: #6B7280;
+  /* Estats de les taules: el mateix color de contorn i de farciment */
+  --taula-lliure: #15803D;
+  --taula-ocupada: #BC002D;
+  --taula-petita: #D1D5DB;
+  --taula-triada: #0B0B0B;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,12 +26,11 @@ body {
   color: var(--negre);
   background: var(--blanc);
 }
+body.pag-reserves { background: var(--fons); line-height: 1.5; }
 
-h2 {
-  font-family: "Merriweather", serif;
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
-}
+/* ==========================================================
+   Portada (index.html)
+   ========================================================== */
 
 .hero {
   min-height: 100vh;
@@ -32,16 +44,13 @@ h2 {
   color: var(--blanc);
   text-align: center;
 }
-
 .logo { width: min(480px, 90vw); height: auto; }
-
 .subtitol {
   font-family: "Times New Roman", serif;
   font-size: 1.1rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
-
 .boto {
   padding: 0.75rem 2rem;
   background: var(--vermell);
@@ -49,26 +58,243 @@ h2 {
   text-decoration: none;
   font-weight: 500;
 }
-.boto:hover, .boto:focus-visible { background: #8f0022; }
+.boto:hover, .boto:focus-visible { background: var(--vermell-fosc); }
 
-.bloc {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 4rem 1rem;
-}
-
-.fosc {
-  max-width: none;
-  background: var(--negre);
-  color: var(--blanc);
-  text-align: center;
-}
+.bloc { max-width: 720px; margin: 0 auto; padding: 4rem 1rem; }
+.bloc h2 { font-family: "Merriweather", serif; font-size: 1.75rem; margin-bottom: 1rem; }
+.fosc { max-width: none; background: var(--negre); color: var(--blanc); text-align: center; }
 .fosc h2 { color: var(--vermell); }
 .fosc p { max-width: 720px; margin: 0 auto; }
 
-footer {
+.peu-portada {
   padding: 1.5rem 1rem;
   text-align: center;
   font-size: 0.85rem;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #E5E5E5;
+}
+
+/* ==========================================================
+   Reserves (reserves.html)
+   ========================================================== */
+
+/* Capçalera */
+.cap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+}
+.marca img { display: block; height: 56px; width: auto; }
+.marca-peu { height: 36px; width: auto; }
+nav { display: flex; gap: 2rem; }
+nav a { color: var(--negre); text-decoration: none; padding-bottom: 0.3rem; }
+nav a.actiu { color: var(--vermell); border-bottom: 2px solid var(--vermell); }
+
+/* Dues columnes */
+.pagina {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+@media (max-width: 860px) {
+  .pagina { grid-template-columns: minmax(0, 1fr); }
+  nav { gap: 1rem; }
+}
+
+.targeta, .info {
+  background: var(--blanc);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.targeta { padding: 2rem; }
+.targeta h2 { font-size: 1.1rem; font-weight: 500; margin: 1.5rem 0 0.9rem; }
+.targeta h2:first-child { margin-top: 0; }
+.info { overflow: hidden; }
+.info img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.info-bloc { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--vora); }
+.info-bloc:last-child { border-bottom: 0; }
+.info h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+.info p { margin: 0 0 0.75rem; color: #333; }
+
+/* Botons d'opció (persones, dies, torns) */
+.opcions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.opcio {
+  min-width: 64px;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  background: var(--blanc);
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+.opcio:hover { border-color: var(--negre); }
+.opcio[aria-pressed="true"] { background: var(--negre); border-color: var(--negre); color: var(--blanc); }
+.opcio:disabled { opacity: 0.35; cursor: not-allowed; }
+.dia { line-height: 1.2; min-width: 76px; }
+.dia small { display: block; font-size: 0.72rem; text-transform: uppercase; opacity: 0.75; }
+.dia b { display: block; font-size: 1.5rem; font-weight: 500; }
+.mes-dies { position: relative; }
+.mes-dies input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+select.opcio { appearance: none; }
+
+.torns { display: grid; grid-template-columns: repeat(2, minmax(0, 220px)); gap: 0.8rem; }
+.torn { padding: 0.9rem; line-height: 1.3; }
+.torn b { display: block; font-size: 1.15rem; text-transform: uppercase; }
+
+/* Botons de navegació */
+.continuar, .tornar {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 0;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.continuar { width: 100%; background: var(--vermell); color: var(--blanc); }
+.continuar:hover, .continuar:focus-visible { background: var(--vermell-fosc); }
+.continuar:disabled { background: #D7D9DE; color: #8A8F98; cursor: not-allowed; }
+.tornar { background: var(--fons); color: var(--negre); padding-inline: 1.5rem; }
+.botons { display: flex; gap: 0.8rem; }
+.botons .continuar { flex: 1; }
+
+.resum { padding: 0.7rem 1rem; background: var(--fons); border-radius: 6px; margin-bottom: 1rem; }
+
+/* Desplegable d'hora */
+.camp-hora { max-width: 260px; margin-bottom: 0.5rem; }
+.camp-hora select {
+  display: block;
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.75rem 2.5rem 0.75rem 0.9rem;
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  background: var(--blanc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230B0B0B' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 0.9rem center;
+  font: inherit;
+  appearance: none;
+  cursor: pointer;
+}
+.camp-hora select:focus-visible { outline: 3px solid #6B8AFD; outline-offset: 2px; }
+
+/* Llegenda: quadres de color sòlid */
+.llegenda { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; font-size: 0.85rem; color: var(--gris); margin-bottom: 1rem; }
+.llegenda span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.quadre { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 2px solid var(--c); background: var(--c); }
+.quadre.lliure { --c: var(--taula-lliure); }
+.quadre.ocupada { --c: var(--taula-ocupada); }
+.quadre.petita { --c: var(--taula-petita); }
+.quadre.assegut { --c: var(--taula-ocupada); height: 9px; border-radius: 5px 5px 2px 2px; } /* forma de cadira */
+
+/* Mapa de la sala */
+.mapa-scroll { overflow-x: auto; padding-bottom: 0.25rem; }
+.mapa {
+  position: relative;
+  min-width: 640px;
+  aspect-ratio: 15 / 7;
+  background: #FAFAF8;
+  background-image: radial-gradient(#E6E6E2 1px, transparent 1px);
+  background-size: 18px 18px;
+  border: 2px solid var(--negre);
+  border-radius: 8px;
+}
+.zona {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gris);
+  background: #EEF0F3;
+}
+.zona.entrada { left: 0; top: 0; width: 16.7%; height: 100%; border-right: 1px dashed var(--vora); border-radius: 6px 0 0 6px; }
+.zona.barra { left: 73.3%; top: 82%; width: 26.7%; height: 9%; background: #2B2B2B; color: var(--blanc); border-radius: 4px 0 0 4px; }
+
+/* Taula: tauler de color sòlid + cadires al voltant */
+.taula {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--blanc);
+  cursor: pointer;
+  --c: var(--taula-lliure);
+}
+.taula.ocupada { --c: var(--taula-ocupada); cursor: not-allowed; }
+.taula.petita { --c: var(--taula-petita); color: #4B5563; cursor: not-allowed; }
+.taula[aria-pressed="true"] { --c: var(--taula-triada); }
+
+.tauler {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  border: 2px solid var(--c);
+  border-radius: 10px;
+  background: var(--c);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  line-height: 1.1;
+  transition: background 0.3s, border-color 0.3s, transform 0.15s;
+}
+.taula:not(:disabled):hover .tauler { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); }
+.taula[aria-pressed="true"] .tauler { box-shadow: 0 0 0 4px rgba(188, 0, 45, 0.3), 0 6px 14px rgba(0, 0, 0, 0.2); }
+.taula:focus-visible { outline: none; }
+.taula:focus-visible .tauler { outline: 3px solid #6B8AFD; outline-offset: 3px; }
+.tauler b { font-size: 0.95rem; }
+.gent { font-size: 0.72rem; }
+.taula.ocupada .gent { font-size: 0.85rem; font-weight: 700; }
+
+.cadira {
+  position: absolute;
+  width: 14px;
+  height: 8px;
+  margin-left: -7px;
+  border: 2px solid var(--c);
+  background: var(--blanc);
+  transition: background 0.3s, border-color 0.3s;
+}
+.cadira.dalt { top: -12px; border-radius: 6px 6px 2px 2px; }
+.cadira.baix { bottom: -12px; border-radius: 2px 2px 6px 6px; }
+.cadira.plena { background: var(--c); }
+
+.seleccio { margin-top: 1rem; font-size: 0.95rem; color: var(--gris); }
+.seleccio.feta { color: var(--negre); font-weight: 500; }
+
+/* Formulari de dades */
+.targeta label { display: block; margin-bottom: 1rem; font-size: 0.95rem; }
+.targeta input, .targeta textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.7rem;
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  font: inherit;
+}
+.targeta label.check { display: flex; gap: 0.5rem; align-items: center; }
+.targeta label.check input { width: auto; margin: 0; }
+.nota { color: var(--gris); margin-top: 0.5rem; }
+
+.peu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2.5rem;
+  color: var(--gris);
 }

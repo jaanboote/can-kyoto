@@ -73,7 +73,7 @@ function pintarPas1() {
   sel.className = "opcio";
   sel.setAttribute("aria-label", "Més de 6 persones");
   sel.innerHTML = `<option value="">...</option>` + [7, 8, 9, 10, 11, 12].map((n) => `<option ${estat.persones === n ? "selected" : ""}>${n}</option>`).join("");
-  if (estat.persones > 6) sel.style.cssText = "background:#0B0B0B;color:#fff";
+  sel.setAttribute("aria-pressed", estat.persones > 6);
   sel.onchange = () => { if (sel.value) { estat.persones = +sel.value; pintarPas1(); } };
   p.append(sel);
 
