@@ -106,17 +106,16 @@ function horaPassada(h) {
   return hh * 60 + mm <= ara.getHours() * 60 + ara.getMinutes();
 }
 function resum() {
-  return `${estat.persones} persones · ${textData(estat.data)} · ${TORNS[estat.torn].nom}` +
-    (estat.hora ? ` a les ${estat.hora}` : "") + (estat.taula ? ` · Taula ${estat.taula}` : "");
+  return `${estat.persones} ${estat.persones === 1 ? "persona" : "persones"}, ${textData(estat.data)}, ` +
+    TORNS[estat.torn].nom.toLowerCase() + (estat.hora ? ` a les ${estat.hora}` : "") +
+    (estat.taula ? `, taula ${estat.taula}` : "");
 }
 function pintarPas2() {
   $("#resum2").textContent = resum();
-  const h = $("#hores"); h.innerHTML = "";
-  for (const hora of TORNS[estat.torn].hores) {
-    const b = boto(hora, estat.hora === hora, () => { estat.hora = hora; pintarPas2(); });
-    b.disabled = horaPassada(hora);
-    h.append(b);
-  }
+  const sel = $("#hora");
+  sel.innerHTML = `<option value="">Tria una hora</option>` + TORNS[estat.torn].hores
+    .map((h) => `<option ${horaPassada(h) ? "disabled" : ""} ${estat.hora === h ? "selected" : ""}>${h}</option>`).join("");
+  sel.onchange = () => { estat.hora = sel.value || null; pintarPas2(); };
   const oc = ocupades();
   if (oc.has(estat.taula)) estat.taula = null;
   const mapa = $("#mapa");
@@ -144,9 +143,16 @@ function pintarPas2() {
     }
     const estatText = gent ? `<span class="gent">${gent}/${places}</span>` : `<span class="gent">${places} places</span>`;
     b.innerHTML = `${cadires}<span class="tauler"><b>T${id}</b>${estatText}</span>`;
-    b.onclick = () => { estat.taula = id; pintarPas2(); };
+    b.title = b.getAttribute("aria-label");
+    b.onclick = () => { estat.taula = estat.taula === id ? null : id; pintarPas2(); };
     mapa.append(b);
   }
+  const triada = TAULES.find(([id]) => id === estat.taula);
+  $("#seleccio").textContent = triada
+    ? `Has triat la taula ${triada[0]}, de ${triada[1]} places.`
+    : "Toca una taula verda per triar-la.";
+  $("#seleccio").classList.toggle("feta", !!triada);
+  $("#pas2 .continuar").disabled = !(estat.hora && estat.taula);
 }
 
 // Fa de sensor: cada pocs segons una taula canvia d'estat, com quan un client s'asseu o marxa.
@@ -179,9 +185,7 @@ $("#pas1").onsubmit = (e) => {
 };
 $("#pas2").onsubmit = (e) => {
   e.preventDefault();
-  if (!estat.hora) return alert("Tria una hora.");
-  if (!estat.taula) return alert("Tria una taula lliure al mapa.");
-  mostrar("pas3");
+  if (estat.hora && estat.taula) mostrar("pas3");
 };
 $("#pas3").onsubmit = (e) => {
   e.preventDefault();

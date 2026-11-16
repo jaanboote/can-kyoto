@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reserves · Can Kyoto</title>
+  <title>Reserves de Can Kyoto</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
@@ -39,16 +39,18 @@
       <!-- Pas 2: hora i taula -->
       <form id="pas2" class="pas" hidden>
         <p class="resum" id="resum2"></p>
-        <h2>Hora</h2>
-        <div class="opcions" id="hores"></div>
+        <label class="camp-hora">Hora
+          <select id="hora" required>
+            <option value="">Tria una hora</option>
+          </select>
+        </label>
 
         <h2>Tria la taula</h2>
         <div class="llegenda">
-          <span><i class="punt lliure"></i> Lliure</span>
-          <span><i class="punt ocupada"></i> Ocupada</span>
-          <span><i class="punt petita"></i> Massa petita</span>
-          <span><i class="punt cadira-llegenda"></i> Persona asseguda</span>
-          <span class="directe"><i class="punt viu"></i> En directe</span>
+          <span><i class="quadre lliure"></i> Lliure</span>
+          <span><i class="quadre ocupada"></i> Ocupada</span>
+          <span><i class="quadre petita"></i> Massa petita</span>
+          <span><i class="quadre assegut"></i> Persona asseguda</span>
         </div>
         <div class="mapa-scroll">
           <div class="mapa" id="mapa">
@@ -56,6 +58,7 @@
             <div class="zona barra">Barra</div>
           </div>
         </div>
+        <p class="seleccio" id="seleccio"></p>
 
         <div class="botons">
           <button type="button" class="tornar" data-anar="pas1">Enrere</button>

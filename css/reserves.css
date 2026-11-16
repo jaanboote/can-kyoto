@@ -110,14 +110,28 @@ select.opcio { appearance: none; }
 .resum { padding: 0.7rem 1rem; background: var(--fons); border-radius: 6px; margin-bottom: 1rem; }
 
 /* Mapa de taules */
-.llegenda { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--gris); margin-bottom: 0.8rem; }
-.punt { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; }
-.punt.lliure { background: var(--lliure); }
-.punt.ocupada { background: var(--vermell); }
-.punt.petita { background: #C9CDD3; }
-.punt.viu { background: var(--lliure); animation: batec 1.4s infinite; }
-@keyframes batec { 50% { opacity: 0.2; } }
-.directe { margin-left: auto; }
+.camp-hora { max-width: 260px; margin-bottom: 0.5rem; }
+.camp-hora select {
+  display: block;
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.75rem 2.5rem 0.75rem 0.9rem;
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  background: var(--blanc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230B0B0B' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 0.9rem center;
+  font: inherit;
+  appearance: none;
+  cursor: pointer;
+}
+.camp-hora select:focus-visible { outline: 3px solid #6B8AFD; outline-offset: 2px; }
+
+.llegenda { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; font-size: 0.85rem; color: var(--gris); margin-bottom: 1rem; }
+.llegenda span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.quadre { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 2px solid; }
+.quadre.lliure { border-color: var(--lliure); background: #EAF7EE; }
+.quadre.ocupada { border-color: var(--vermell); background: #FCE8ED; }
+.quadre.petita { border-color: #C9CDD3; background: #F3F4F6; }
+.quadre.assegut { border-color: var(--vermell); background: var(--vermell); }
 
 .mapa-scroll { overflow-x: auto; padding-bottom: 0.25rem; }
 .mapa {
@@ -140,7 +154,7 @@ select.opcio { appearance: none; }
   color: var(--gris);
   background: #EEF0F3;
 }
-.zona.entrada { left: 0; top: 0; width: 16.7%; height: 100%; border-right: 1px dashed var(--vora); }
+.zona.entrada { left: 0; top: 0; width: 16.7%; height: 100%; border-right: 1px dashed var(--vora); border-radius: 6px 0 0 6px; }
 .zona.barra { left: 73.3%; top: 82%; width: 26.7%; height: 9%; background: #2B2B2B; color: var(--blanc); border-radius: 4px 0 0 4px; }
 
 /* Taula: tauler + cadires al voltant */
@@ -155,8 +169,9 @@ select.opcio { appearance: none; }
   --fons-taula: #EAF7EE;
 }
 .taula.ocupada { --color: var(--vermell); --fons-taula: #FCE8ED; cursor: not-allowed; color: var(--negre); }
-.taula.petita { --color: #C9CDD3; --fons-taula: #F3F4F6; cursor: not-allowed; color: #9CA3AF; }
+.taula.petita { --color: #C9CDD3; --fons-taula: #F3F4F6; cursor: not-allowed; color: #9CA3AF; opacity: 0.7; }
 .taula[aria-pressed="true"] { --color: var(--negre); --fons-taula: var(--negre); color: var(--blanc); }
+.taula[aria-pressed="true"] .tauler { box-shadow: 0 0 0 4px rgba(188, 0, 45, 0.25), 0 6px 14px rgba(0, 0, 0, 0.15); }
 
 .tauler {
   position: absolute;
@@ -192,7 +207,10 @@ select.opcio { appearance: none; }
 .cadira.dalt { top: -12px; border-radius: 6px 6px 2px 2px; }
 .cadira.baix { bottom: -12px; border-radius: 2px 2px 6px 6px; }
 .cadira.plena { background: var(--color); }
-.punt.cadira-llegenda { border-radius: 3px; background: var(--vermell); width: 12px; height: 8px; }
+
+.seleccio { margin-top: 1rem; font-size: 0.95rem; color: var(--gris); }
+.seleccio.feta { color: var(--negre); font-weight: 500; }
+.continuar:disabled { background: #D7D9DE; color: #8A8F98; cursor: not-allowed; }
 
 /* Formulari de dades */
 label { display: block; margin-bottom: 1rem; font-size: 0.95rem; }
