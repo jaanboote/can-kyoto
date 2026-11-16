@@ -1,13 +1,14 @@
 // Reserves de Can Kyoto.
 // shortcut: no hi ha servidor; l'ocupació es simula i les reserves es guarden al navegador (localStorage).
-// Quan tinguem el servidor amb Home Assistant, ocupades() ha de llegir l'estat real dels sensors per WebSocket.
+// Quan tinguem el servidor amb Home Assistant, ocupades() ha de llegir dels sensors per WebSocket
+// quantes persones hi ha a cada taula (el mapa ja ho pinta).
 
 const TAULES = [
   // id, places, posició al mapa en % (left, top, width, height). Mateixa distribució que el plànol.
-  [1, 4, 21.3, 11.7, 6.7, 15], [2, 4, 34.7, 11.7, 6.7, 15], [3, 4, 48, 11.7, 6.7, 15],
-  [4, 4, 61.3, 11.7, 6.7, 15], [5, 4, 74.7, 11.7, 6.7, 15], [6, 4, 88, 11.7, 6.7, 15],
-  [7, 6, 22.7, 51.7, 10.7, 15], [8, 6, 42.7, 51.7, 10.7, 15], [9, 6, 62.7, 51.7, 10.7, 15],
-  [10, 4, 84, 46.7, 6.7, 15],
+  [1, 4, 20.5, 14, 8, 17], [2, 4, 34, 14, 8, 17], [3, 4, 47.5, 14, 8, 17],
+  [4, 4, 61, 14, 8, 17], [5, 4, 74.5, 14, 8, 17], [6, 4, 88, 14, 8, 17],
+  [7, 6, 21.5, 52, 12, 17], [8, 6, 41.5, 52, 12, 17], [9, 6, 61.5, 52, 12, 17],
+  [10, 4, 84, 48, 8, 17],
 ];
 const TORNS = {
   dinar: { nom: "Dinar", franja: "13:00 – 16:45", hores: ["13:00", "13:30", "14:00", "14:30", "15:00", "15:30"] },
@@ -38,16 +39,20 @@ function guardar(llista) {
 function hash(text) {
   let h = 0;
   for (const c of text) h = Math.imul(h ^ c.charCodeAt(0), 2654435761);
-  h ^= h >>> 15; h = Math.imul(h, 2246822507); h ^= h >>> 13; // barreja final: taules seguides no donen valors seguits
+  // barreja final (murmur3): taules seguides no donen valors seguits, ni als bits baixos que fa servir el %
+  h ^= h >>> 16; h = Math.imul(h, 2246822507); h ^= h >>> 13; h = Math.imul(h, 3266489909); h ^= h >>> 16;
   return h >>> 0;
 }
-const canvisEnDirecte = new Map(); // taula -> ocupada, canvis dels "sensors" mentre mires el mapa
+const canvisEnDirecte = new Map(); // taula -> persones (0 = lliure), canvis dels "sensors" mentre mires el mapa
+// Retorna Map(taula -> persones assegudes). Les taules lliures no hi són.
 function ocupades() {
   const k = `${clauData(estat.data)}|${estat.torn}`;
-  const set = new Set(TAULES.filter(([id]) => hash(`${k}|${id}`) % 100 < 35).map(([id]) => id));
-  for (const r of llegir()) if (r.data === clauData(estat.data) && r.torn === estat.torn) set.add(r.taula);
-  for (const [id, oc] of canvisEnDirecte) oc ? set.add(id) : set.delete(id);
-  return set;
+  const oc = new Map();
+  for (const [id, places] of TAULES)
+    if (hash(`${k}|${id}`) % 100 < 35) oc.set(id, 1 + (hash(`${k}|${id}|p`) % places));
+  for (const r of llegir()) if (r.data === clauData(estat.data) && r.torn === estat.torn) oc.set(r.taula, r.persones);
+  for (const [id, n] of canvisEnDirecte) n ? oc.set(id, n) : oc.delete(id);
+  return oc;
 }
 
 function boto(html, actiu, onclick, extra = "") {
@@ -122,12 +127,23 @@ function pintarPas2() {
     b.className = "taula";
     b.style.cssText = `left:${l}%;top:${t}%;width:${w}%;height:${hh}%`;
     const petita = places < estat.persones;
-    if (oc.has(id)) b.classList.add("ocupada");
+    const gent = oc.get(id) || 0;
+    if (gent) b.classList.add("ocupada");
     else if (petita) b.classList.add("petita");
-    b.disabled = oc.has(id) || petita;
+    b.disabled = gent > 0 || petita;
     b.setAttribute("aria-pressed", estat.taula === id);
-    b.setAttribute("aria-label", `Taula ${id}, ${places} places, ${oc.has(id) ? "ocupada" : petita ? "massa petita" : "lliure"}`);
-    b.innerHTML = `<b>T${id}</b>${places} p.`;
+    b.setAttribute("aria-label", `Taula ${id}, ${places} places, ` +
+      (gent ? `ocupada per ${gent} persones` : petita ? "massa petita" : "lliure"));
+    // Cadires: la meitat a dalt i la meitat a baix; les primeres "gent" surten plenes.
+    const mig = places / 2;
+    let cadires = "";
+    for (let i = 0; i < places; i++) {
+      const costat = i < mig ? "dalt" : "baix";
+      const x = (((i % mig) + 0.5) / mig) * 100;
+      cadires += `<i class="cadira ${costat}${i < gent ? " plena" : ""}" style="left:${x}%"></i>`;
+    }
+    const estatText = gent ? `<span class="gent">${gent}/${places}</span>` : `<span class="gent">${places} places</span>`;
+    b.innerHTML = `${cadires}<span class="tauler"><b>T${id}</b>${estatText}</span>`;
     b.onclick = () => { estat.taula = id; pintarPas2(); };
     mapa.append(b);
   }
@@ -136,9 +152,9 @@ function pintarPas2() {
 // Fa de sensor: cada pocs segons una taula canvia d'estat, com quan un client s'asseu o marxa.
 setInterval(() => {
   if ($("#pas2").hidden) return;
-  const lliures = TAULES.map(([id]) => id).filter((id) => id !== estat.taula);
-  const id = lliures[Math.floor(Math.random() * lliures.length)];
-  canvisEnDirecte.set(id, !ocupades().has(id));
+  const altres = TAULES.filter(([id]) => id !== estat.taula);
+  const [id, places] = altres[Math.floor(Math.random() * altres.length)];
+  canvisEnDirecte.set(id, ocupades().has(id) ? 0 : 1 + Math.floor(Math.random() * places));
   pintarPas2();
 }, 6000);
 
