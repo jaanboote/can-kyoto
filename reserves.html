@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reserves de Can Kyoto</title>
+  <meta name="description" content="Reserva una taula a Can Kyoto: tria el dia, l'hora i la taula al mapa de la sala.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
@@ -11,54 +12,75 @@
 </head>
 <body class="pag-reserves">
   <header class="cap">
-    <a href="index.html" class="marca"><img src="img/logotip-fosc.png" alt="Can Kyoto, inici"></a>
-    <nav>
+    <a href="index.html" class="marca"><img src="img/logotip-fosc.png" alt="Can Kyoto, inici" width="900" height="403" fetchpriority="high"></a>
+    <nav aria-label="Navegació principal">
       <a href="index.html">Inici</a>
-      <a href="reserves.html" class="actiu">Reserves</a>
+      <a href="reserves.html" class="actiu" aria-current="page">Reserves</a>
       <a href="index.html#on-som">On som</a>
     </nav>
   </header>
 
   <main class="pagina">
-    <section class="targeta" aria-live="polite">
+    <section class="targeta" aria-labelledby="titol-reserva">
+      <h1 id="titol-reserva" class="sr-only">Reserva una taula</h1>
+
+      <ol class="progres" aria-label="Passos de la reserva">
+        <li data-pas="pas1">Dia i persones</li>
+        <li data-pas="pas2">Hora i taula</li>
+        <li data-pas="pas3">Les teves dades</li>
+      </ol>
 
       <!-- Pas 1: persones, data i torn -->
-      <form id="pas1" class="pas">
-        <h2>Persones</h2>
-        <div class="opcions" id="persones"></div>
+      <form id="pas1" class="pas" aria-labelledby="titol-pas1">
+        <h2 id="titol-pas1" class="sr-only" tabindex="-1">Pas 1: dia i persones</h2>
 
-        <h2>Data</h2>
-        <div class="opcions" id="dies"></div>
+        <fieldset>
+          <legend>Persones</legend>
+          <div class="opcions" id="persones"></div>
+          <p id="avis-grup" class="avis" hidden>Per a grups de més de 6 persones, truca'ns i et preparem una taula.</p>
+        </fieldset>
 
-        <h2>Reserva per</h2>
-        <div class="torns" id="torns"></div>
+        <fieldset>
+          <legend>Data</legend>
+          <div class="opcions" id="dies"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Reserva per</legend>
+          <div class="torns" id="torns"></div>
+        </fieldset>
 
         <button type="submit" class="continuar">Continuar</button>
       </form>
 
       <!-- Pas 2: hora i taula -->
-      <form id="pas2" class="pas" hidden>
+      <form id="pas2" class="pas" aria-labelledby="titol-pas2" hidden>
+        <h2 id="titol-pas2" class="sr-only" tabindex="-1">Pas 2: hora i taula</h2>
         <p class="resum" id="resum2"></p>
-        <label class="camp-hora">Hora
-          <select id="hora" required>
-            <option value="">Tria una hora</option>
-          </select>
-        </label>
 
-        <h2>Tria la taula</h2>
-        <div class="llegenda">
-          <span><i class="quadre lliure"></i> Lliure</span>
-          <span><i class="quadre ocupada"></i> Ocupada</span>
-          <span><i class="quadre petita"></i> Massa petita</span>
-          <span><i class="quadre assegut"></i> Persona asseguda</span>
+        <div class="camp camp-hora">
+          <label for="hora">Hora <span aria-hidden="true">*</span></label>
+          <select id="hora" name="hora" required data-error="error-hora"></select>
+          <p id="error-hora" class="error-msg">Error: tria una hora per a la reserva.</p>
         </div>
-        <div class="mapa-scroll">
-          <div class="mapa" id="mapa">
-            <div class="zona entrada">Entrada</div>
-            <div class="zona barra">Barra</div>
+
+        <fieldset class="taules">
+          <legend>Tria la taula <span aria-hidden="true">*</span></legend>
+          <div class="llegenda">
+            <span><i class="quadre lliure"></i> Lliure</span>
+            <span><i class="quadre ocupada"></i> Ocupada</span>
+            <span><i class="quadre petita"></i> Massa petita</span>
+            <span><i class="quadre assegut"></i> Persona asseguda</span>
           </div>
-        </div>
-        <p class="seleccio" id="seleccio"></p>
+          <div class="mapa-scroll">
+            <div class="mapa" id="mapa">
+              <div class="zona entrada" aria-hidden="true">Entrada</div>
+              <div class="zona barra" aria-hidden="true">Barra</div>
+            </div>
+          </div>
+          <p id="error-taula" class="error-msg">Error: tria una de les taules verdes del mapa.</p>
+        </fieldset>
+        <p class="seleccio" id="seleccio" aria-live="polite"></p>
 
         <div class="botons">
           <button type="button" class="tornar" data-anar="pas1">Enrere</button>
@@ -67,13 +89,42 @@
       </form>
 
       <!-- Pas 3: dades del client -->
-      <form id="pas3" class="pas" hidden>
+      <form id="pas3" class="pas" aria-labelledby="titol-pas3" hidden>
+        <h2 id="titol-pas3" class="sr-only" tabindex="-1">Pas 3: les teves dades</h2>
         <p class="resum" id="resum3"></p>
-        <label>Nom i cognoms <input name="nom" required autocomplete="name"></label>
-        <label>Telèfon <input name="telefon" type="tel" required autocomplete="tel" pattern="[0-9 +]{9,15}"></label>
-        <label>Correu electrònic <input name="correu" type="email" required autocomplete="email"></label>
-        <label>Comentaris (al·lèrgies, celebracions...) <textarea name="comentaris" rows="3"></textarea></label>
-        <label class="check"><input type="checkbox" required> Accepto la política de privacitat (RGPD)</label>
+
+        <div class="camp">
+          <label for="nom">Nom i cognoms <span aria-hidden="true">*</span></label>
+          <input id="nom" name="nom" required autocomplete="name" maxlength="100" enterkeyhint="next" data-error="error-nom">
+          <p id="error-nom" class="error-msg">Error: escriu el teu nom.</p>
+        </div>
+
+        <div class="camp">
+          <label for="telefon">Telèfon <span aria-hidden="true">*</span></label>
+          <span id="pista-telefon" class="pista">9 xifres, per exemple 600 123 456.</span>
+          <input id="telefon" name="telefon" type="tel" required autocomplete="tel" pattern="[0-9 +]{9,15}" enterkeyhint="next" aria-describedby="pista-telefon" data-error="error-telefon">
+          <p id="error-telefon" class="error-msg">Error: escriu un telèfon de 9 xifres com a mínim.</p>
+        </div>
+
+        <div class="camp">
+          <label for="correu">Correu electrònic <span aria-hidden="true">*</span></label>
+          <input id="correu" name="correu" type="email" required autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="next" data-error="error-correu">
+          <p id="error-correu" class="error-msg">Error: escriu un correu amb el format nom@exemple.com.</p>
+        </div>
+
+        <div class="camp">
+          <label for="comentaris">Comentaris (al·lèrgies, celebracions...)</label>
+          <textarea id="comentaris" name="comentaris" rows="3" maxlength="500"></textarea>
+        </div>
+
+        <div class="camp camp-check">
+          <input id="rgpd" name="rgpd" type="checkbox" required data-error="error-rgpd">
+          <label for="rgpd">Accepto la política de privacitat (RGPD) <span aria-hidden="true">*</span></label>
+          <p id="error-rgpd" class="error-msg">Error: has d'acceptar la política de privacitat per reservar.</p>
+        </div>
+
+        <p class="nota">Els camps amb * són obligatoris.</p>
+
         <div class="botons">
           <button type="button" class="tornar" data-anar="pas2">Enrere</button>
           <button type="submit" class="continuar">Confirmar reserva</button>
@@ -82,7 +133,7 @@
 
       <!-- Confirmació -->
       <div id="fet" class="pas" hidden>
-        <h2>Reserva confirmada</h2>
+        <h2 id="titol-fet" tabindex="-1">Reserva confirmada</h2>
         <p id="resumFet"></p>
         <p class="nota">Recorda que Can Kyoto és un local només per a adults.</p>
         <button type="button" class="continuar" id="nova">Fer una altra reserva</button>
@@ -90,7 +141,7 @@
     </section>
 
     <aside class="info">
-      <img src="img/sala.jpg" alt="Sala de Can Kyoto amb una taula de fusta sota un llum càlid">
+      <img src="img/sala.jpg" alt="Sala de Can Kyoto amb una taula de fusta sota un llum càlid" width="474" height="250">
       <div class="info-bloc">
         <h3>Horaris</h3>
         <p><strong>Dinar</strong><br>13:00 – 16:45</p>
@@ -104,7 +155,7 @@
   </main>
 
   <footer class="peu">
-    <img src="img/logotip-fosc.png" alt="Can Kyoto" class="marca-peu">
+    <img src="img/logotip-fosc.png" alt="Can Kyoto" class="marca-peu" width="900" height="403" loading="lazy">
     <p>Cuina mediterrània i japonesa, amb ànima.</p>
   </footer>
 

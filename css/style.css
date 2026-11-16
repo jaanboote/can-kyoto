@@ -10,6 +10,9 @@
   --fons: #F5F6F8;
   --vora: #DADDE2;
   --gris: #6B7280;
+  --vora-camp: #767676; /* contorn dels camps: contrast 4.5:1 sobre blanc */
+  --focus: #2F5BEA;
+  --error: #B3261E;
   /* Estats de les taules: el mateix color de contorn i de farciment */
   --taula-lliure: #15803D;
   --taula-ocupada: #BC002D;
@@ -25,8 +28,24 @@ body {
   line-height: 1.6;
   color: var(--negre);
   background: var(--blanc);
+  font-size-adjust: from-font; /* la font de reserva ocupa el mateix mentre carrega Ubuntu */
 }
 body.pag-reserves { background: var(--fons); line-height: 1.5; }
+
+/* Amaga visualment però ho manté per als lectors de pantalla */
+.visually-hidden:where(:not(:focus-within, :active)),
+.sr-only {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
 /* ==========================================================
    Portada (index.html)
@@ -169,28 +188,51 @@ nav a.actiu { color: var(--vermell); border-bottom: 2px solid var(--vermell); }
 .info h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
 .info p { margin: 0 0 0.75rem; color: #333; }
 
-/* Botons d'opció (persones, dies, torns) */
+/* Pas actual */
+.progres { display: flex; gap: 0.5rem; list-style: none; margin-bottom: 1.75rem; counter-reset: pas; }
+.progres li {
+  flex: 1;
+  padding-top: 0.5rem;
+  border-top: 4px solid var(--vora);
+  font-size: 0.85rem;
+  color: var(--gris);
+  counter-increment: pas;
+}
+.progres li::before { content: counter(pas) ". "; }
+.progres li[aria-current="step"] { border-color: var(--vermell); color: var(--negre); font-weight: 500; }
+.progres li:has(~ li[aria-current="step"]) { border-color: var(--negre); }
+
+/* Grups d'opcions */
+fieldset { border: 0; margin: 0 0 1.5rem; min-width: 0; }
+legend { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.9rem; padding: 0; }
+.avis { margin-top: 0.8rem; padding: 0.7rem 1rem; border-left: 4px solid var(--vermell); background: #FCE8ED; }
+
+/* Rajoles d'opció: un radio real amagat dins d'un label */
 .opcions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .opcio {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
   min-width: 64px;
+  min-height: 48px;
   padding: 0.8rem 1rem;
-  border: 1px solid var(--vora);
+  border: 1px solid var(--vora-camp);
   border-radius: 6px;
   background: var(--blanc);
-  font: inherit;
   font-size: 1rem;
-  cursor: pointer;
   text-align: center;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
 }
 .opcio:hover { border-color: var(--negre); }
-.opcio[aria-pressed="true"] { background: var(--negre); border-color: var(--negre); color: var(--blanc); }
-.opcio:disabled { opacity: 0.35; cursor: not-allowed; }
+.opcio:has(:checked) { background: var(--negre); border-color: var(--negre); color: var(--blanc); }
+.opcio:has(:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
 .dia { line-height: 1.2; min-width: 76px; }
 .dia small { display: block; font-size: 0.72rem; text-transform: uppercase; opacity: 0.75; }
 .dia b { display: block; font-size: 1.5rem; font-weight: 500; }
 .mes-dies { position: relative; }
-.mes-dies input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-select.opcio { appearance: none; }
+.mes-dies b { font-size: 1rem; }
+.mes-dies input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
 
 .torns { display: grid; grid-template-columns: repeat(2, minmax(0, 220px)); gap: 0.8rem; }
 .torn { padding: 0.9rem; line-height: 1.3; }
@@ -217,21 +259,38 @@ select.opcio { appearance: none; }
 
 .resum { padding: 0.7rem 1rem; background: var(--fons); border-radius: 6px; margin-bottom: 1rem; }
 
-/* Desplegable d'hora */
-.camp-hora { max-width: 260px; margin-bottom: 0.5rem; }
-.camp-hora select {
-  display: block;
+/* Camps del formulari */
+.camp { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1.4rem; }
+.camp label { font-size: 0.95rem; font-weight: 500; }
+.pista { font-size: 0.85rem; color: var(--gris); }
+.camp input, .camp textarea, .camp select {
   width: 100%;
-  margin-top: 0.35rem;
-  padding: 0.75rem 2.5rem 0.75rem 0.9rem;
-  border: 1px solid var(--vora);
+  min-height: 48px;
+  padding: 0.75rem;
+  border: 1px solid var(--vora-camp);
   border-radius: 6px;
-  background: var(--blanc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230B0B0B' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 0.9rem center;
+  background-color: var(--blanc);
   font: inherit;
+  font-size: max(1rem, 1em); /* mínim 16px: iOS no fa zoom en entrar al camp */
+}
+.camp-hora { max-width: 260px; }
+.camp select {
+  padding-right: 2.5rem;
+  background: var(--blanc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230B0B0B' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 0.9rem center;
   appearance: none;
   cursor: pointer;
 }
-.camp-hora select:focus-visible { outline: 3px solid #6B8AFD; outline-offset: 2px; }
+.camp-check { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.camp-check input { width: 1.4rem; min-height: 0; height: 1.4rem; accent-color: var(--vermell); }
+.camp-check label { font-weight: 400; }
+.camp-check .error-msg { flex-basis: 100%; }
+
+/* Errors: només després que l'usuari hagi tocat el camp o intentat enviar */
+.error-msg { display: none; font-size: 0.9rem; color: var(--error); }
+.camp :is(input, select, textarea):user-invalid { border: 2px solid var(--error); background-color: #FDECEA; }
+.camp:has(:user-invalid) .error-msg,
+.taules:has(:user-invalid) .error-msg { display: block; }
+.taules:has(:user-invalid) .mapa { border-color: var(--error); }
 
 /* Llegenda: quadres de color sòlid */
 .llegenda { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; font-size: 0.85rem; color: var(--gris); margin-bottom: 1rem; }
@@ -280,7 +339,7 @@ select.opcio { appearance: none; }
 }
 .taula.ocupada { --c: var(--taula-ocupada); cursor: not-allowed; }
 .taula.petita { --c: var(--taula-petita); color: #4B5563; cursor: not-allowed; }
-.taula[aria-pressed="true"] { --c: var(--taula-triada); }
+.taula:has(:checked) { --c: var(--taula-triada); }
 
 .tauler {
   position: absolute;
@@ -295,12 +354,14 @@ select.opcio { appearance: none; }
   background: var(--c);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   line-height: 1.1;
-  transition: background 0.3s, border-color 0.3s, transform 0.15s;
+  transition: background-color 0.3s, border-color 0.3s, transform 0.15s;
 }
-.taula:not(:disabled):hover .tauler { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); }
-.taula[aria-pressed="true"] .tauler { box-shadow: 0 0 0 4px rgba(188, 0, 45, 0.3), 0 6px 14px rgba(0, 0, 0, 0.2); }
-.taula:focus-visible { outline: none; }
-.taula:focus-visible .tauler { outline: 3px solid #6B8AFD; outline-offset: 3px; }
+.taula.lliure:hover .tauler { box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); }
+@media (prefers-reduced-motion: no-preference) {
+  .taula.lliure:hover .tauler { transform: translateY(-2px); }
+}
+.taula:has(:checked) .tauler { box-shadow: 0 0 0 4px rgba(188, 0, 45, 0.3), 0 6px 14px rgba(0, 0, 0, 0.2); }
+.taula:has(:focus-visible) .tauler { outline: 3px solid var(--focus); outline-offset: 3px; }
 .tauler b { font-size: 0.95rem; }
 .gent { font-size: 0.72rem; }
 .taula.ocupada .gent { font-size: 0.85rem; font-weight: 700; }
@@ -318,22 +379,8 @@ select.opcio { appearance: none; }
 .cadira.baix { bottom: -12px; border-radius: 2px 2px 6px 6px; }
 .cadira.plena { background: var(--c); }
 
-.seleccio { margin-top: 1rem; font-size: 0.95rem; color: var(--gris); }
-.seleccio.feta { color: var(--negre); font-weight: 500; }
+.seleccio { min-height: 1.5em; margin-top: 0.5rem; font-size: 0.95rem; font-weight: 500; }
 
-/* Formulari de dades */
-.targeta label { display: block; margin-bottom: 1rem; font-size: 0.95rem; }
-.targeta input, .targeta textarea {
-  display: block;
-  width: 100%;
-  margin-top: 0.35rem;
-  padding: 0.7rem;
-  border: 1px solid var(--vora);
-  border-radius: 6px;
-  font: inherit;
-}
-.targeta label.check { display: flex; gap: 0.5rem; align-items: center; }
-.targeta label.check input { width: auto; margin: 0; }
 .nota { color: var(--gris); margin-top: 0.5rem; }
 
 .peu {
