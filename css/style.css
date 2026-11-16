@@ -1,50 +1,17 @@
 /* ==========================================================
-   Can Kyoto: full d'estils únic de tota la web
+   Can Kyoto: full d'estils de tota la web
+   Colors de la guia d'estil: negre #0B0B0B, blanc #FFFFFF i vermell #BC002D
    ========================================================== */
-
-:root {
-  --negre: #0B0B0B;
-  --blanc: #FFFFFF;
-  --vermell: #BC002D;
-  --vermell-fosc: #8F0022;
-  --fons: #F5F6F8;
-  --vora: #DADDE2;
-  --gris: #6B7280;
-  --vora-camp: #767676; /* contorn dels camps: contrast 4.5:1 sobre blanc */
-  --focus: #2F5BEA;
-  --error: #B3261E;
-  /* Estats de les taules: el mateix color de contorn i de farciment */
-  --taula-lliure: #15803D;
-  --taula-ocupada: #BC002D;
-  --taula-petita: #D1D5DB;
-  --taula-triada: #0B0B0B;
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: "Ubuntu", "Zen Kaku Gothic New", sans-serif;
-  font-size: 1rem;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 16px;
   line-height: 1.6;
-  color: var(--negre);
-  background: var(--blanc);
+  color: #0B0B0B;
+  background: #FFFFFF;
 }
-body.pag-reserves { background: var(--fons); line-height: 1.5; }
-
-/* Amaga visualment però ho manté per als lectors de pantalla */
-.visually-hidden:where(:not(:focus-within, :active)),
-.sr-only {
-  position: absolute !important;
-  clip-path: inset(50%) !important;
-  overflow: hidden !important;
-  width: 1px !important;
-  height: 1px !important;
-  margin: -1px !important;
-  padding: 0 !important;
-  border: 0 !important;
-  white-space: nowrap !important;
-}
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
 /* ==========================================================
    Portada (index.html)
@@ -236,252 +203,158 @@ body.pag-reserves { background: var(--fons); line-height: 1.5; }
    Reserves (reserves.html)
    ========================================================== */
 
+.pag-reserves { background: #F5F6F8; }
+
 /* Capçalera */
-.cap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.25rem 1rem;
-}
-.marca img { display: block; height: 56px; width: auto; }
-.marca-peu { height: 36px; width: auto; }
-nav { display: flex; gap: 2rem; }
-nav a { color: var(--negre); text-decoration: none; padding-bottom: 0.3rem; }
-nav a.actiu { color: var(--vermell); border-bottom: 2px solid var(--vermell); }
+.cap { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
+.logo-cap { height: 56px; }
+.menu-reserves { display: flex; gap: 30px; }
+.menu-reserves a { color: #0B0B0B; text-decoration: none; padding-bottom: 4px; }
+.menu-reserves a.actiu { color: #BC002D; border-bottom: 2px solid #BC002D; }
 
-/* Dues columnes */
-.pagina {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem 2rem;
-}
-@media (max-width: 860px) {
-  .pagina { grid-template-columns: minmax(0, 1fr); }
-  nav { gap: 1rem; }
-}
-
-.targeta, .info {
-  background: var(--blanc);
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-.targeta { padding: 2rem; }
-.targeta h2 { font-size: 1.1rem; font-weight: 500; margin: 1.5rem 0 0.9rem; }
-.targeta h2:first-child { margin-top: 0; }
+/* Dues columnes: reserva a l'esquerra, informació a la dreta */
+.pagina { display: grid; grid-template-columns: 1fr 340px; gap: 24px; max-width: 1200px; margin: 0 auto; padding: 0 16px 32px; }
+.targeta, .info { background: #FFFFFF; border-radius: 10px; }
+.targeta { padding: 32px; min-width: 0; }   /* min-width: 0 perquè el mapa no ensanchi la columna */
+.targeta h2 { font-size: 18px; font-weight: 500; margin: 24px 0 14px; }
 .info { overflow: hidden; }
-.info img { width: 100%; height: 200px; object-fit: cover; display: block; }
-.info-bloc { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--vora); }
-.info-bloc:last-child { border-bottom: 0; }
-.info h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
-.info p { margin: 0 0 0.75rem; color: #333; }
+.info img { display: block; width: 100%; height: 200px; object-fit: cover; }
+.info-bloc { padding: 20px 24px; border-bottom: 1px solid #DDDDDD; }
+.info-bloc h3 { font-size: 18px; margin-bottom: 12px; }
+.info-bloc p { margin-bottom: 12px; }
 
-/* Pas actual */
-.progres { display: flex; gap: 0.5rem; list-style: none; margin-bottom: 1.75rem; counter-reset: pas; }
-.progres li {
-  flex: 1;
-  padding-top: 0.5rem;
-  border-top: 4px solid var(--vora);
-  font-size: 0.85rem;
-  color: var(--gris);
-  counter-increment: pas;
-}
-.progres li::before { content: counter(pas) ". "; }
-.progres li[aria-current="step"] { border-color: var(--vermell); color: var(--negre); font-weight: 500; }
-.progres li:has(~ li[aria-current="step"]) { border-color: var(--negre); }
+/* Indicador de passos */
+.progres { display: flex; gap: 8px; list-style: none; margin-bottom: 24px; }
+.progres li { flex: 1; padding-top: 8px; border-top: 4px solid #DDDDDD; font-size: 14px; color: #6B7280; }
+.progres li.actiu { border-top-color: #BC002D; color: #0B0B0B; font-weight: 500; }
 
-/* Grups d'opcions */
-fieldset { border: 0; margin: 0 0 1.5rem; min-width: 0; }
-legend { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.9rem; padding: 0; }
-.avis { margin-top: 0.8rem; padding: 0.7rem 1rem; border-left: 4px solid var(--vermell); background: #FCE8ED; }
-
-/* Rajoles d'opció: un radio real amagat dins d'un label */
-.opcions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+/* Botons d'opció (persones, dies i torns) */
+.opcions { display: flex; flex-wrap: wrap; gap: 10px; }
 .opcio {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
   min-width: 64px;
-  min-height: 48px;
-  padding: 0.8rem 1rem;
-  border: 1px solid var(--vora-camp);
+  padding: 13px 16px;
+  border: 1px solid #999999;
   border-radius: 6px;
-  background: var(--blanc);
-  font-size: 1rem;
-  text-align: center;
+  background: #FFFFFF;
+  font-family: inherit;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.15s, color 0.15s;
 }
-.opcio:hover { border-color: var(--negre); }
-.opcio:has(:checked) { background: var(--negre); border-color: var(--negre); color: var(--blanc); }
-.opcio:has(:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
-.dia { line-height: 1.2; min-width: 76px; }
-.dia small { display: block; font-size: 0.72rem; text-transform: uppercase; opacity: 0.75; }
-.dia b { display: block; font-size: 1.5rem; font-weight: 500; }
-.mes-dies { position: relative; }
-.mes-dies b { font-size: 1rem; }
-.mes-dies input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+.opcio:hover { border-color: #0B0B0B; }
+.opcio.triat { background: #0B0B0B; border-color: #0B0B0B; color: #FFFFFF; }
+.dia { min-width: 76px; line-height: 1.2; }
+.dia small { display: block; font-size: 11px; text-transform: uppercase; }
+.dia b { display: block; font-size: 24px; font-weight: 500; }
+.torn { width: 200px; }
+.torn b { display: block; font-size: 18px; text-transform: uppercase; }
 
-.torns { display: grid; grid-template-columns: repeat(2, minmax(0, 220px)); gap: 0.8rem; }
-.torn { padding: 0.9rem; line-height: 1.3; }
-.torn b { display: block; font-size: 1.15rem; text-transform: uppercase; }
+.nota { margin-top: 10px; font-size: 14px; color: #6B7280; }
+.resum { padding: 12px 16px; margin-bottom: 20px; background: #F5F6F8; border-radius: 6px; }
 
-/* Botons de navegació */
+/* Botons de Continuar i Enrere */
 .continuar, .tornar {
-  margin-top: 2rem;
-  padding: 1rem;
+  margin-top: 32px;
+  padding: 16px;
   border: 0;
   border-radius: 6px;
-  font: inherit;
+  font-family: inherit;
+  font-size: 15px;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
   cursor: pointer;
 }
-.continuar { width: 100%; background: var(--vermell); color: var(--blanc); }
-.continuar:hover, .continuar:focus-visible { background: var(--vermell-fosc); }
-.continuar:disabled { background: #D7D9DE; color: #8A8F98; cursor: not-allowed; }
-.tornar { background: var(--fons); color: var(--negre); padding-inline: 1.5rem; }
-.botons { display: flex; gap: 0.8rem; }
-.botons .continuar { flex: 1; }
+.continuar { width: 100%; background: #BC002D; color: #FFFFFF; }
+.continuar:hover { background: #8F0022; }
+.tornar { padding-left: 24px; padding-right: 24px; background: #F5F6F8; }
+.botons { display: flex; gap: 12px; }
 
-.resum { padding: 0.7rem 1rem; background: var(--fons); border-radius: 6px; margin-bottom: 1rem; }
-
-/* Camps del formulari */
-.camp { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1.4rem; }
-.camp label { font-size: 0.95rem; font-weight: 500; }
-.pista { font-size: 0.85rem; color: var(--gris); }
-.camp input, .camp textarea, .camp select {
+/* Formulari */
+label { display: block; margin: 18px 0 6px; font-weight: 500; }
+input, select, textarea {
   width: 100%;
-  min-height: 48px;
-  padding: 0.75rem;
-  border: 1px solid var(--vora-camp);
+  padding: 12px;
+  border: 1px solid #999999;
   border-radius: 6px;
-  background-color: var(--blanc);
-  font: inherit;
-  font-size: max(1rem, 1em); /* mínim 16px: iOS no fa zoom en entrar al camp */
+  font-family: inherit;
+  font-size: 16px;
 }
-.camp-hora { max-width: 260px; }
-.camp select {
-  padding-right: 2.5rem;
-  background: var(--blanc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230B0B0B' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 0.9rem center;
-  appearance: none;
-  cursor: pointer;
-}
-.camp-check { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
-.camp-check input { width: 1.4rem; min-height: 0; height: 1.4rem; accent-color: var(--vermell); }
-.camp-check label { font-weight: 400; }
-.camp-check .error-msg { flex-basis: 100%; }
+select { max-width: 260px; }
+.check { display: flex; align-items: center; gap: 10px; font-weight: 400; }
+.check input { width: 20px; height: 20px; }
+.error { min-height: 24px; margin-top: 12px; color: #B3261E; font-weight: 500; }
 
-/* Errors: només després que l'usuari hagi tocat el camp o intentat enviar */
-.error-msg { display: none; font-size: 0.9rem; color: var(--error); }
-.camp :is(input, select, textarea):user-invalid { border: 2px solid var(--error); background-color: #FDECEA; }
-.camp:has(:user-invalid) .error-msg,
-.taules:has(:user-invalid) .error-msg { display: block; }
-.taules:has(:user-invalid) .mapa { border-color: var(--error); }
-
-/* Llegenda: quadres de color sòlid */
-.llegenda { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; font-size: 0.85rem; color: var(--gris); margin-bottom: 1rem; }
-.llegenda span { display: inline-flex; align-items: center; gap: 0.4rem; }
-.quadre { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 2px solid var(--c); background: var(--c); }
-.quadre.lliure { --c: var(--taula-lliure); }
-.quadre.ocupada { --c: var(--taula-ocupada); }
-.quadre.petita { --c: var(--taula-petita); }
-.quadre.assegut { --c: var(--taula-ocupada); height: 9px; border-radius: 5px 5px 2px 2px; } /* forma de cadira */
+/* Llegenda del mapa */
+.llegenda { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 16px; font-size: 14px; color: #6B7280; }
+.quadre { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; }
+.quadre.lliure { background: #15803D; }
+.quadre.ocupada { background: #BC002D; }
+.quadre.petita { background: #D1D5DB; }
+.quadre.assegut { height: 9px; border-radius: 5px 5px 2px 2px; background: #BC002D; }
 
 /* Mapa de la sala */
-.mapa-scroll { overflow-x: auto; padding-bottom: 0.25rem; }
+.mapa-scroll { overflow-x: auto; }      /* al mòbil el mapa es desplaça de costat */
 .mapa {
-  position: relative;
+  position: relative;                    /* les taules es col·loquen a dins amb position: absolute */
   min-width: 640px;
-  aspect-ratio: 15 / 7;
-  background: #FAFAF8;
-  background-image: radial-gradient(#E6E6E2 1px, transparent 1px);
-  background-size: 18px 18px;
-  border: 2px solid var(--negre);
+  height: 300px;
+  border: 2px solid #0B0B0B;
   border-radius: 8px;
+  background: #FAFAF8;
 }
-.zona {
-  position: absolute;
-  display: grid;
-  place-items: center;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gris);
-  background: #EEF0F3;
-}
-.zona.entrada { left: 0; top: 0; width: 16.7%; height: 100%; border-right: 1px dashed var(--vora); border-radius: 6px 0 0 6px; }
-.zona.barra { left: 73.3%; top: 82%; width: 26.7%; height: 9%; background: #2B2B2B; color: var(--blanc); border-radius: 4px 0 0 4px; }
+.zona { position: absolute; display: flex; align-items: center; justify-content: center; font-size: 12px; text-transform: uppercase; }
+.zona.entrada { left: 0; top: 0; width: 16.7%; height: 100%; background: #EEF0F3; color: #6B7280; }
+.zona.barra { left: 73.3%; top: 82%; width: 26.7%; height: 9%; background: #2B2B2B; color: #FFFFFF; }
 
-/* Taula: tauler de color sòlid + cadires al voltant */
-.taula {
-  position: absolute;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  color: var(--blanc);
-  cursor: pointer;
-  --c: var(--taula-lliure);
-}
-.taula.ocupada { --c: var(--taula-ocupada); cursor: not-allowed; }
-.taula.petita { --c: var(--taula-petita); color: #4B5563; cursor: not-allowed; }
-.taula:has(:checked) { --c: var(--taula-triada); }
-
+/* Taula = tauler de color + cadires al voltant */
+.taula { position: absolute; border: 0; background: none; font-family: inherit; cursor: pointer; }
+.taula:disabled { cursor: not-allowed; }
 .tauler {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1px;
-  border: 2px solid var(--c);
   border-radius: 10px;
-  background: var(--c);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  line-height: 1.1;
-  transition: background-color 0.3s, border-color 0.3s, transform 0.15s;
+  color: #FFFFFF;
+  font-size: 12px;
+  line-height: 1.2;
 }
-.taula.lliure:hover .tauler { box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); }
-@media (prefers-reduced-motion: no-preference) {
-  .taula.lliure:hover .tauler { transform: translateY(-2px); }
-}
-.taula:has(:checked) .tauler { box-shadow: 0 0 0 4px rgba(188, 0, 45, 0.3), 0 6px 14px rgba(0, 0, 0, 0.2); }
-.taula:has(:focus-visible) .tauler { outline: 3px solid var(--focus); outline-offset: 3px; }
-.tauler b { font-size: 0.95rem; }
-.gent { font-size: 0.72rem; }
-.taula.ocupada .gent { font-size: 0.85rem; font-weight: 700; }
+.tauler b { font-size: 15px; }
 
 .cadira {
   position: absolute;
   width: 14px;
   height: 8px;
-  margin-left: -7px;
-  border: 2px solid var(--c);
-  background: var(--blanc);
-  transition: background 0.3s, border-color 0.3s;
+  margin-left: -7px;                     /* centra la cadira al seu punt */
+  border: 2px solid;
+  background: #FFFFFF;
 }
 .cadira.dalt { top: -12px; border-radius: 6px 6px 2px 2px; }
 .cadira.baix { bottom: -12px; border-radius: 2px 2px 6px 6px; }
-.cadira.plena { background: var(--c); }
 
-.seleccio { min-height: 1.5em; margin-top: 0.5rem; font-size: 0.95rem; font-weight: 500; }
+/* Colors de cada estat: el contorn i el farciment són del mateix color */
+.lliure .tauler { background: #15803D; }
+.lliure .cadira { border-color: #15803D; }
+.ocupada .tauler { background: #BC002D; }
+.ocupada .cadira { border-color: #BC002D; }
+.ocupada .cadira.plena { background: #BC002D; }
+.petita .tauler { background: #D1D5DB; color: #4B5563; }
+.petita .cadira { border-color: #D1D5DB; }
+.triada .tauler { background: #0B0B0B; }
+.triada .cadira { border-color: #0B0B0B; }
+.lliure:hover .tauler { background: #116A32; }
 
-.nota { color: var(--gris); margin-top: 0.5rem; }
+/* Peu */
+.peu { display: flex; align-items: center; gap: 32px; max-width: 1200px; margin: 0 auto; padding: 24px 16px 40px; color: #6B7280; }
+.logo-peu-reserves { height: 36px; }
 
-.peu {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem 2.5rem;
-  color: var(--gris);
+/* Mòbil */
+@media (max-width: 860px) {
+  .pagina { grid-template-columns: 1fr; }
+  .menu-reserves { gap: 16px; }
+  .targeta { padding: 20px; }
 }

@@ -1,235 +1,265 @@
-// Reserves de Can Kyoto.
-// shortcut: no hi ha servidor; l'ocupació es simula i les reserves es guarden al navegador (localStorage).
-// Quan tinguem el servidor amb Home Assistant, ocupades() ha de llegir dels sensors per WebSocket
-// quantes persones hi ha a cada taula (el mapa ja ho pinta).
+// =====================================================
+// RESERVES DE CAN KYOTO
+// La web no té servidor (GitHub Pages), per això:
+//  - les taules ocupades són un exemple fix (més endavant les llegirem dels sensors)
+//  - les reserves noves es guarden al navegador amb localStorage
+// =====================================================
 
-const TAULES = [
-  // id, places, posició al mapa en % (left, top, width, height). Mateixa distribució que el plànol.
-  [1, 4, 20.5, 14, 8, 17], [2, 4, 34, 14, 8, 17], [3, 4, 47.5, 14, 8, 17],
-  [4, 4, 61, 14, 8, 17], [5, 4, 74.5, 14, 8, 17], [6, 4, 88, 14, 8, 17],
-  [7, 6, 21.5, 52, 12, 17], [8, 6, 41.5, 52, 12, 17], [9, 6, 61.5, 52, 12, 17],
-  [10, 4, 84, 48, 8, 17],
+// ---------- DADES ----------
+
+// Cada taula: número, places i posició al mapa en % (esquerra, dalt, amplada, alçada)
+const taules = [
+  { num: 1, places: 4, x: 20.5, y: 14, amplada: 8, alcada: 17 },
+  { num: 2, places: 4, x: 34, y: 14, amplada: 8, alcada: 17 },
+  { num: 3, places: 4, x: 47.5, y: 14, amplada: 8, alcada: 17 },
+  { num: 4, places: 4, x: 61, y: 14, amplada: 8, alcada: 17 },
+  { num: 5, places: 4, x: 74.5, y: 14, amplada: 8, alcada: 17 },
+  { num: 6, places: 4, x: 88, y: 14, amplada: 8, alcada: 17 },
+  { num: 7, places: 6, x: 21.5, y: 52, amplada: 12, alcada: 17 },
+  { num: 8, places: 6, x: 41.5, y: 52, amplada: 12, alcada: 17 },
+  { num: 9, places: 6, x: 61.5, y: 52, amplada: 12, alcada: 17 },
+  { num: 10, places: 4, x: 84, y: 48, amplada: 8, alcada: 17 },
 ];
-const TORNS = {
-  dinar: { nom: "Dinar", franja: "13:00 – 16:45", hores: ["13:00", "13:30", "14:00", "14:30", "15:00", "15:30"] },
-  sopar: { nom: "Sopar", franja: "17:00 – 22:30", hores: ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30"] },
+
+// Taules ocupades d'exemple per a cada torn: { número de taula: persones assegudes }
+const ocupadesExemple = {
+  dinar: { 2: 3, 5: 4, 9: 5 },
+  sopar: { 1: 2, 3: 4, 7: 6, 10: 3 },
 };
-const DIES = ["dg.", "dl.", "dt.", "dc.", "dj.", "dv.", "ds."];
-const DIES_LLARGS = ["diumenge", "dilluns", "dimarts", "dimecres", "dijous", "divendres", "dissabte"];
-const MESOS = ["gen.", "febr.", "març", "abr.", "maig", "juny", "jul.", "ag.", "set.", "oct.", "nov.", "des."];
-const CLAU = "ck_reserves";
-const MAX_PERSONES = 6;
 
-const estat = { persones: 2, data: avui(), torn: "sopar", hora: "", taula: 0 };
-const $ = (s) => document.querySelector(s);
+const hores = {
+  dinar: ["13:00", "13:30", "14:00", "14:30", "15:00", "15:30"],
+  sopar: ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30"],
+};
 
-function avui() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
-// Data local (no UTC): a Barcelona, toISOString() donaria el dia anterior a mitjanit.
-function clauData(d) {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
-function textData(d) { return `${DIES[d.getDay()]} ${d.getDate()} ${MESOS[d.getMonth()]}`; }
+const nomsDies = ["dg.", "dl.", "dt.", "dc.", "dj.", "dv.", "ds."];
+const nomsMesos = ["gen.", "febr.", "març", "abr.", "maig", "juny", "jul.", "ag.", "set.", "oct.", "nov.", "des."];
 
-// Només guardem el que cal per pintar el mapa: res de nom, telèfon ni correu (RGPD, minimització de dades).
-function llegir() {
-  try { return JSON.parse(localStorage.getItem(CLAU)) || []; } catch { return []; }
-}
-function guardar(llista) {
-  try { localStorage.setItem(CLAU, JSON.stringify(llista)); } catch { /* navegador sense storage: la reserva només es mostra */ }
-}
+// El que ha triat el client
+let persones = 2;
+let data = new Date();
+let torn = "sopar";
+let hora = "";
+let taulaTriada = 0;
 
-// Simulació estable: la mateixa data i torn donen sempre les mateixes taules ocupades.
-function hash(text) {
-  let h = 0;
-  for (const c of text) h = Math.imul(h ^ c.charCodeAt(0), 2654435761);
-  // barreja final (murmur3): taules seguides no donen valors seguits, ni als bits baixos que fa servir el %
-  h ^= h >>> 16; h = Math.imul(h, 2246822507); h ^= h >>> 13; h = Math.imul(h, 3266489909); h ^= h >>> 16;
-  return h >>> 0;
-}
-// Retorna Map(taula -> persones assegudes). Les taules lliures no hi són.
-function ocupades() {
-  const k = `${clauData(estat.data)}|${estat.torn}`;
-  const oc = new Map();
-  for (const [id, places] of TAULES)
-    if (hash(`${k}|${id}`) % 100 < 35) oc.set(id, 1 + (hash(`${k}|${id}|p`) % places));
-  for (const r of llegir()) if (r.data === clauData(estat.data) && r.torn === estat.torn) oc.set(r.taula, r.persones);
-  return oc;
+
+// ---------- FUNCIONS D'AJUDA ----------
+
+// Data en format 2026-11-16. No fem servir toISOString() perquè passa a hora UTC
+// i a Barcelona, a mitjanit, donaria el dia anterior.
+function dataText(d) {
+  const mes = String(d.getMonth() + 1).padStart(2, "0");
+  const dia = String(d.getDate()).padStart(2, "0");
+  return d.getFullYear() + "-" + mes + "-" + dia;
 }
 
-// Opció en forma de rajola: un radio real (accessible i amb teclat) dins d'un label.
-function rajola(nom, valor, html, triat, extra = "", etiqueta = "") {
-  const label = document.createElement("label");
-  label.className = `opcio ${extra}`;
-  label.innerHTML = `<input type="radio" class="visually-hidden" name="${nom}" value="${valor}" ${triat ? "checked" : ""}
-    ${etiqueta ? `aria-label="${etiqueta}"` : ""}>${html}`;
-  return label;
+// Data per mostrar: "dl. 16 nov."
+function dataBonica(d) {
+  return nomsDies[d.getDay()] + " " + d.getDate() + " " + nomsMesos[d.getMonth()];
 }
 
-// ---------- Pas 1
-function pintarDies() {
-  const d = $("#dies");
-  const dies = [];
-  for (let i = 0; i < 6; i++) { const dia = avui(); dia.setDate(dia.getDate() + i); dies.push(dia); }
-  if (!dies.some((dia) => +dia === +estat.data)) dies.push(estat.data); // data triada al calendari
-  d.replaceChildren(...dies.map((dia) => {
-    const nom = +dia === +avui() ? "Avui" : DIES[dia.getDay()];
-    return rajola("data", clauData(dia), `<small aria-hidden="true">${nom}</small><b aria-hidden="true">${dia.getDate()}</b><small aria-hidden="true">${MESOS[dia.getMonth()]}</small>`,
-      +dia === +estat.data, "dia", `${nom === "Avui" ? "Avui, " : ""}${DIES_LLARGS[dia.getDay()]} ${dia.getDate()} ${MESOS[dia.getMonth()]}`);
-  }));
-  const altra = document.createElement("label");
-  altra.className = "opcio dia mes-dies";
-  altra.innerHTML = `<small>Altra</small><b>data</b><input type="date" name="altra-data" min="${clauData(avui())}" aria-label="Tria una altra data">`;
-  d.append(altra);
-}
-function pintarPas1() {
-  const valors = [1, 2, 3, 4, 5, 6, "mes"];
-  $("#persones").replaceChildren(...valors.map((n) =>
-    rajola("persones", n, n === "mes" ? "+6" : n, estat.persones === n || (n === "mes" && estat.persones > MAX_PERSONES), "",
-      n === "mes" ? "Més de 6 persones" : "")));
-  pintarDies();
-  $("#torns").replaceChildren(...Object.entries(TORNS).map(([clau, torn]) =>
-    rajola("torn", clau, `<b>${torn.nom}</b>${torn.franja}`, estat.torn === clau, "torn")));
-  $("#avis-grup").hidden = estat.persones <= MAX_PERSONES;
+// Llegeix les reserves guardades al navegador
+function llegirReserves() {
+  const text = localStorage.getItem("reserves");
+  if (text === null) return [];
+  return JSON.parse(text);
 }
 
-$("#pas1").addEventListener("change", (e) => {
-  const { name, value } = e.target;
-  if (name === "persones") {
-    estat.persones = value === "mes" ? MAX_PERSONES + 1 : +value;
-    $("#avis-grup").hidden = estat.persones <= MAX_PERSONES;
-  }
-  if (name === "data") estat.data = new Date(value + "T00:00");
-  if (name === "torn") estat.torn = value;
-  if (name === "altra-data" && value) {
-    estat.data = new Date(value + "T00:00");
-    pintarDies();
-    $(`#dies input[value="${value}"]`).focus();
-  }
-});
-
-// ---------- Pas 2
-function horaPassada(h) {
-  if (+estat.data !== +avui()) return false;
-  const [hh, mm] = h.split(":").map(Number);
-  const ara = new Date();
-  return hh * 60 + mm <= ara.getHours() * 60 + ara.getMinutes();
-}
-function resum() {
-  return `${estat.persones} ${estat.persones === 1 ? "persona" : "persones"}, ${textData(estat.data)}, ` +
-    TORNS[estat.torn].nom.toLowerCase() + (estat.hora ? ` a les ${estat.hora}` : "") +
-    (estat.taula ? `, taula ${estat.taula}` : "");
-}
-function pintarSeleccio() {
-  $("#resum2").textContent = resum();
-  const triada = TAULES.find(([id]) => id === estat.taula);
-  $("#seleccio").textContent = triada ? `Has triat la taula ${triada[0]}, de ${triada[1]} places.` : "";
-}
-function pintarPas2() {
-  const sel = $("#hora");
-  sel.replaceChildren(new Option("Tria una hora", ""), ...TORNS[estat.torn].hores.map((h) => {
-    const o = new Option(h, h, false, estat.hora === h);
-    o.disabled = horaPassada(h);
-    return o;
-  }));
-
-  const oc = ocupades();
-  if (oc.has(estat.taula)) estat.taula = 0;
-  const taules = TAULES.map(([id, places, l, t, w, hh]) => {
-    const gent = oc.get(id) || 0;
-    const petita = places < estat.persones;
-    const estatTaula = gent ? "ocupada" : petita ? "petita" : "lliure";
-    const descripcio = gent ? `ocupada per ${gent} de ${places} persones` : petita ? `massa petita, ${places} places` : `lliure, ${places} places`;
-    // Cadires: la meitat a dalt i la meitat a baix; les primeres "gent" surten plenes.
-    const mig = places / 2;
-    let cadires = "";
-    for (let i = 0; i < places; i++) {
-      const x = (((i % mig) + 0.5) / mig) * 100;
-      cadires += `<i class="cadira ${i < mig ? "dalt" : "baix"}${i < gent ? " plena" : ""}" style="left:${x}%"></i>`;
+// Retorna un objecte { taula: persones } amb les taules ocupades del dia i torn triats
+function taulesOcupades() {
+  const ocupades = { ...ocupadesExemple[torn] };
+  for (const r of llegirReserves()) {
+    if (r.data === dataText(data) && r.torn === torn) {
+      ocupades[r.taula] = r.persones;
     }
-    const label = document.createElement("label");
-    label.className = `taula ${estatTaula}`;
-    label.style.cssText = `left:${l}%;top:${t}%;width:${w}%;height:${hh}%`;
-    label.title = `Taula ${id}, ${descripcio}`;
-    label.innerHTML = `<input type="radio" class="visually-hidden" name="taula" value="${id}" required
-        ${gent || petita ? "disabled" : ""} ${estat.taula === id ? "checked" : ""} data-error="error-taula">
-      <span class="visually-hidden">Taula ${id}, ${descripcio}</span>
-      <span aria-hidden="true">${cadires}<span class="tauler"><b>T${id}</b>
-        <span class="gent">${gent ? `${gent}/${places}` : `${places} places`}</span></span></span>`;
-    return label;
-  });
-  $("#mapa").querySelectorAll(".taula").forEach((e) => e.remove());
-  $("#mapa").append(...taules);
-  pintarSeleccio();
-}
-
-$("#pas2").addEventListener("change", (e) => {
-  if (e.target.name === "hora") estat.hora = e.target.value;
-  if (e.target.name === "taula") estat.taula = +e.target.value;
-  pintarSeleccio();
-});
-
-// ---------- Errors accessibles: aria-invalid i aria-describedby segueixen :user-invalid
-// (la guia de Modern Web Guidance "accessible-error-announcement").
-function enllacarError(el, mostrat) {
-  const id = el.dataset.error;
-  if (!id) return;
-  const ids = (el.getAttribute("aria-describedby") || "").split(/\s+/).filter((x) => x && x !== id);
-  if (mostrat) ids.push(id);
-  if (ids.length) el.setAttribute("aria-describedby", ids.join(" "));
-  else el.removeAttribute("aria-describedby");
-}
-function sincronitzarAria(el) {
-  if (!el.matches?.("input, select, textarea")) return;
-  const invalid = el.matches(":user-invalid");
-  el.setAttribute("aria-invalid", invalid);
-  enllacarError(el, invalid);
-}
-document.querySelectorAll("input, select, textarea").forEach((el) => el.setAttribute("aria-invalid", "false"));
-for (const tipus of ["blur", "change", "input", "invalid"])
-  document.addEventListener(tipus, (e) => sincronitzarAria(e.target), true);
-
-// ---------- Navegació entre passos
-function mostrar(id, enfocar = true) {
-  for (const p of document.querySelectorAll(".pas")) p.hidden = p.id !== id;
-  for (const li of document.querySelectorAll(".progres li")) {
-    if (li.dataset.pas === id) li.setAttribute("aria-current", "step");
-    else li.removeAttribute("aria-current");
   }
-  $(".progres").hidden = id === "fet";
-  if (id === "pas1") pintarPas1();
-  if (id === "pas2") pintarPas2();
-  if (id === "pas3") $("#resum3").textContent = resum();
-  // El focus va al títol del pas nou perquè el lector de pantalla l'anunciï (i la pàgina s'hi desplaça).
-  if (enfocar) $(`#${id} h2`).focus();
+  return ocupades;
 }
-document.querySelectorAll("[data-anar]").forEach((b) => b.addEventListener("click", () => mostrar(b.dataset.anar)));
 
-$("#pas1").addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (estat.persones > MAX_PERSONES) {
-    $("#avis-grup").hidden = false;
-    $("#persones input[value='mes']").focus();
-    return;
+function resum() {
+  let text = persones + " persones, " + dataBonica(data) + ", " + torn;
+  if (hora) text += " a les " + hora;
+  if (taulaTriada) text += ", taula " + taulaTriada;
+  return text;
+}
+
+// Marca un botó com a triat i desmarca la resta del mateix grup
+function marcar(grup, boto) {
+  for (const b of grup.querySelectorAll(".opcio")) b.classList.remove("triat");
+  boto.classList.add("triat");
+}
+
+
+// ---------- PAS 1: persones, dia i torn ----------
+
+document.querySelector("#persones").addEventListener("click", (e) => {
+  const boto = e.target.closest(".opcio");
+  if (!boto) return;
+  persones = Number(boto.dataset.valor);
+  marcar(e.currentTarget, boto);
+});
+
+document.querySelector("#torns").addEventListener("click", (e) => {
+  const boto = e.target.closest(".opcio");
+  if (!boto) return;
+  torn = boto.dataset.valor;
+  marcar(e.currentTarget, boto);
+});
+
+// Botons dels pròxims 7 dies
+function pintarDies() {
+  const contenidor = document.querySelector("#dies");
+  contenidor.innerHTML = "";
+  for (let i = 0; i < 7; i++) {
+    const dia = new Date();
+    dia.setDate(dia.getDate() + i);
+
+    const boto = document.createElement("button");
+    boto.type = "button";
+    boto.className = "opcio dia";
+    if (i === 0) boto.classList.add("triat");
+    const nom = i === 0 ? "Avui" : nomsDies[dia.getDay()];
+    boto.innerHTML = "<small>" + nom + "</small><b>" + dia.getDate() + "</b><small>" + nomsMesos[dia.getMonth()] + "</small>";
+
+    boto.addEventListener("click", () => {
+      data = dia;
+      marcar(contenidor, boto);
+    });
+    contenidor.appendChild(boto);
   }
-  estat.hora = ""; estat.taula = 0;
-  mostrar("pas2");
+}
+
+
+// ---------- PAS 2: hora i taula ----------
+
+function pintarHores() {
+  const select = document.querySelector("#hora");
+  select.innerHTML = '<option value="">Tria una hora</option>';
+  for (const h of hores[torn]) {
+    select.innerHTML += "<option>" + h + "</option>";
+  }
+}
+
+document.querySelector("#hora").addEventListener("change", (e) => {
+  hora = e.target.value;
+  document.querySelector("#resum2").textContent = resum();
 });
-$("#pas2").addEventListener("submit", (e) => {
-  e.preventDefault(); // la validació nativa (required) ja ha bloquejat l'enviament si falta hora o taula
-  mostrar("pas3");
+
+function pintarMapa() {
+  const mapa = document.querySelector("#mapa");
+  const ocupades = taulesOcupades();
+
+  // Esborrem les taules d'abans (però no l'entrada ni la barra)
+  for (const t of mapa.querySelectorAll(".taula")) t.remove();
+
+  for (const t of taules) {
+    const gent = ocupades[t.num] || 0;   // persones assegudes (0 = lliure)
+
+    // Estat de la taula
+    let estat = "lliure";
+    if (gent > 0) estat = "ocupada";
+    else if (t.places < persones) estat = "petita";
+    if (t.num === taulaTriada) estat = "triada";
+
+    // Cadires: la meitat a dalt i la meitat a baix. Les ocupades surten plenes.
+    let cadires = "";
+    const meitat = t.places / 2;
+    for (let i = 0; i < t.places; i++) {
+      const costat = i < meitat ? "dalt" : "baix";
+      const posicio = ((i % meitat) + 0.5) / meitat * 100;
+      const plena = i < gent ? " plena" : "";
+      cadires += '<i class="cadira ' + costat + plena + '" style="left:' + posicio + '%"></i>';
+    }
+
+    const text = gent > 0 ? gent + "/" + t.places : t.places + " places";
+
+    const boto = document.createElement("button");
+    boto.type = "button";
+    boto.className = "taula " + estat;
+    boto.style.left = t.x + "%";
+    boto.style.top = t.y + "%";
+    boto.style.width = t.amplada + "%";
+    boto.style.height = t.alcada + "%";
+    boto.innerHTML = cadires + '<span class="tauler"><b>T' + t.num + "</b><span>" + text + "</span></span>";
+
+    // Només es poden triar les taules lliures
+    if (estat === "lliure" || estat === "triada") {
+      boto.addEventListener("click", () => {
+        taulaTriada = t.num;
+        document.querySelector("#error2").textContent = "";
+        document.querySelector("#resum2").textContent = resum();
+        pintarMapa();
+      });
+    } else {
+      boto.disabled = true;
+    }
+
+    mapa.appendChild(boto);
+  }
+}
+
+
+// ---------- CANVIAR DE PAS ----------
+
+function mostrarPas(numero) {
+  document.querySelector("#pas1").hidden = numero !== 1;
+  document.querySelector("#pas2").hidden = numero !== 2;
+  document.querySelector("#pas3").hidden = numero !== 3;
+  document.querySelector("#fet").hidden = numero !== 4;
+
+  for (let i = 1; i <= 3; i++) {
+    document.querySelector("#marca" + i).classList.toggle("actiu", i === numero);
+  }
+  window.scrollTo(0, 0);
+}
+
+document.querySelector("#anar-pas2").addEventListener("click", () => {
+  hora = "";
+  taulaTriada = 0;
+  pintarHores();
+  pintarMapa();
+  document.querySelector("#resum2").textContent = resum();
+  document.querySelector("#error2").textContent = "";
+  mostrarPas(2);
 });
-$("#pas3").addEventListener("submit", (e) => {
+
+document.querySelector("#anar-pas3").addEventListener("click", () => {
+  const error = document.querySelector("#error2");
+  if (hora === "") {
+    error.textContent = "Tria una hora per continuar.";
+  } else if (taulaTriada === 0) {
+    error.textContent = "Tria una taula verda del mapa per continuar.";
+  } else {
+    document.querySelector("#resum3").textContent = resum();
+    mostrarPas(3);
+  }
+});
+
+document.querySelector("#tornar-pas1").addEventListener("click", () => mostrarPas(1));
+document.querySelector("#tornar-pas2").addEventListener("click", () => mostrarPas(2));
+
+
+// ---------- PAS 3: confirmar ----------
+
+// El navegador comprova els camps obligatoris (required) abans d'arribar aquí
+document.querySelector("#pas3").addEventListener("submit", (e) => {
   e.preventDefault();
-  const boto = e.target.querySelector("[type=submit]");
-  boto.disabled = true; // evita reserves duplicades per doble clic
-  const nom = new FormData(e.target).get("nom").trim();
-  guardar([...llegir(), { data: clauData(estat.data), torn: estat.torn, hora: estat.hora, taula: estat.taula, persones: estat.persones }]);
-  $("#resumFet").textContent = `${nom}, t'esperem el ${textData(estat.data)} a les ${estat.hora}. ` +
-    `Taula ${estat.taula} per a ${estat.persones} persones.`;
+
+  // Guardem només el que cal per pintar el mapa (sense nom, telèfon ni correu: RGPD)
+  const reserves = llegirReserves();
+  reserves.push({ data: dataText(data), torn: torn, hora: hora, taula: taulaTriada, persones: persones });
+  localStorage.setItem("reserves", JSON.stringify(reserves));
+
+  const nom = document.querySelector("#nom").value;
+  document.querySelector("#resum-fet").textContent =
+    nom + ", t'esperem el " + dataBonica(data) + " a les " + hora + ". Taula " + taulaTriada + " per a " + persones + " persones.";
+
   e.target.reset();
-  boto.disabled = false;
-  mostrar("fet");
+  mostrarPas(4);
 });
-$("#nova").addEventListener("click", () => { estat.hora = ""; estat.taula = 0; mostrar("pas1"); });
 
-mostrar("pas1", false);
+document.querySelector("#nova").addEventListener("click", () => mostrarPas(1));
+
+
+// ---------- INICI ----------
+pintarDies();
