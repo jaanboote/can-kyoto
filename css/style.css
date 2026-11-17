@@ -70,7 +70,19 @@ body {
   margin-top: -320px;          /* la meitat de l'alçada, una mica més amunt */
   margin-left: -300px;         /* la meitat de l'amplada: queda centrat */
   border: 1px solid rgba(188, 0, 45, 0.35);
+  border-top-color: #BC002D;   /* un tros més intens perquè es vegi que gira */
   border-radius: 50%;
+  animation: girar 60s linear infinite;   /* una volta per minut */
+}
+
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Si l'usuari té activat "reduir moviment" al sistema, el cercle no gira */
+@media (prefers-reduced-motion: reduce) {
+  .cercle { animation: none; }
 }
 
 .hero-centre {
