@@ -60,7 +60,8 @@ body {
   color: #BC002D;
 }
 
-/* Cercle fi darrere del logo (com l'ensō del logotip) */
+/* Cercle darrere del logo en forma d'ensō: el cercle japonès pintat d'un sol traç de pinzell,
+   que es deixa obert. El tros de dalt és transparent i les puntes s'aprimen soles. */
 .cercle {
   position: absolute;
   top: 50%;
@@ -69,8 +70,8 @@ body {
   height: 600px;
   margin-top: -320px;          /* la meitat de l'alçada, una mica més amunt */
   margin-left: -300px;         /* la meitat de l'amplada: queda centrat */
-  border: 1px solid rgba(188, 0, 45, 0.35);
-  border-top-color: #BC002D;   /* un tros més intens perquè es vegi que gira */
+  border: 3px solid rgba(188, 0, 45, 0.55);
+  border-top-color: transparent;   /* l'obertura de l'ensō: així també es veu que gira */
   border-radius: 50%;
   animation: girar 60s linear infinite;   /* una volta per minut */
 }
