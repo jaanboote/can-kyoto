@@ -350,18 +350,35 @@ textarea { resize: vertical; }
 .quadre.petita { background: #D1D5DB; }
 .quadre.assegut { height: 8px; border-radius: 5px 5px 2px 2px; background: #BC002D; }
 
-/* Mapa de la sala */
+/* Mapa de la sala, dibuixat com un plànol d'arquitecte */
 .mapa-scroll { overflow-x: auto; }      /* al mòbil el mapa es desplaça de costat */
 .mapa {
   position: relative;                    /* les taules es col·loquen a dins amb position: absolute */
   min-width: 640px;
-  height: 300px;
-  border: 1px solid #0B0B0B;
-  background: #FFFFFF;
+  height: 360px;
+  border: 3px solid #0B0B0B;             /* parets gruixudes, com en un plànol */
+  background-color: #FFFFFF;
+  /* Quadrícula de 30px: dues línies grises, una horitzontal i una vertical, que es repeteixen */
+  background-image:
+    linear-gradient(#F1F1F1 1px, transparent 1px),
+    linear-gradient(90deg, #F1F1F1 1px, transparent 1px);
+  background-size: 30px 30px;
 }
-.zona { position: absolute; display: flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: 1px; }
-.zona.entrada { left: 0; top: 0; width: 16.7%; height: 100%; border-right: 1px dashed #CFCFCF; color: #8A8A8A; }
-.zona.barra { left: 73.3%; top: 82%; width: 26.7%; height: 9%; background: #0B0B0B; color: #FFFFFF; }
+.zona { position: absolute; display: flex; align-items: center; justify-content: center; font-size: 13px; letter-spacing: 1px; }
+.zona.entrada { left: 0; top: 0; width: 16.7%; height: 100%; border-right: 1px dashed #BDBDBD; background: #FFFFFF; color: #6B6B6B; }
+
+/* La porta: un forat a la paret de l'esquerra, marcat en vermell */
+.zona.entrada::before {
+  content: "";
+  position: absolute;
+  left: -3px;                            /* just a sobre de la paret */
+  top: 40%;
+  width: 3px;
+  height: 20%;
+  background: #BC002D;
+}
+
+.zona.barra { left: 70%; top: 84%; width: 30%; height: 16%; border-top: 3px solid #0B0B0B; background: #F1F1F1; color: #0B0B0B; }
 
 /* Taula = tauler de color + cadires al voltant */
 .taula { position: absolute; border: 0; background: none; font-family: inherit; cursor: pointer; }
@@ -379,9 +396,9 @@ textarea { resize: vertical; }
   border-radius: 4px;
   color: #FFFFFF;
   font-size: 12px;
-  line-height: 1.2;
+  line-height: 1.3;
 }
-.tauler b { font-size: 15px; }
+.tauler b { font-family: "Merriweather", serif; font-size: 15px; font-weight: 400; }
 
 .cadira {
   position: absolute;
@@ -405,6 +422,9 @@ textarea { resize: vertical; }
 .triada .tauler { background: #0B0B0B; }
 .triada .cadira { border-color: #0B0B0B; }
 .lliure:hover .tauler { background: #116A32; }
+
+/* La taula triada porta un marc vermell al voltant, perquè es vegi clar quina és */
+.triada .tauler { outline: 2px solid #BC002D; outline-offset: 5px; }
 
 /* Peu */
 .peu {
