@@ -198,7 +198,7 @@ body {
 .fila { display: flex; justify-content: space-between; max-width: none !important; padding: 14px 0; margin: 0 !important; border-bottom: 1px solid #DDDDDD; }
 .horaris .boto { display: block; margin-top: 30px; text-align: center; }
 
-/* Peu */
+/* Peu (el mateix a totes les pàgines) */
 .peu-portada { padding: 64px 24px 48px; background: #0B0B0B; color: #BDBDBD; text-align: center; font-size: 15px; }
 .logo-peu { width: 130px; margin-bottom: 18px; }
 .peu-portada .petit { margin-top: 24px; padding-top: 24px; border-top: 1px solid #333333; font-size: 12px; color: #888888; }
@@ -426,18 +426,6 @@ textarea { resize: vertical; }
 /* La taula triada porta un marc vermell al voltant, perquè es vegi clar quina és */
 .triada .tauler { outline: 2px solid #BC002D; outline-offset: 5px; }
 
-/* Peu */
-.peu {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 32px 16px 48px;
-  border-top: 1px solid #E5E5E5;
-  color: #6B6B6B;
-}
-.logo-peu-reserves { height: 36px; }
 
 /* Mòbil */
 @media (max-width: 860px) {
