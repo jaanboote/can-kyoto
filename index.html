@@ -22,6 +22,14 @@
     </nav>
 
     <p class="kanji">京都</p>
+
+    <!-- Filtre SVG: deforma la vora del cercle amb soroll perquè sembli pintada amb pinzell -->
+    <svg class="filtres" aria-hidden="true">
+      <filter id="pinzell">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="soroll" />
+        <feDisplacementMap in="SourceGraphic" in2="soroll" scale="4" />
+      </filter>
+    </svg>
     <div class="cercle"></div>
 
     <div class="hero-centre">

@@ -70,8 +70,13 @@ body {
   height: 600px;
   margin-top: -320px;          /* la meitat de l'alçada, una mica més amunt */
   margin-left: -300px;         /* la meitat de l'amplada: queda centrat */
-  border: 3px solid rgba(188, 0, 45, 0.55);
+  border-style: solid;
+  border-color: rgba(188, 0, 45, 0.5);
   border-top-color: transparent;   /* l'obertura de l'ensō: així també es veu que gira */
+  /* Cada costat té un gruix diferent (dalt, dreta, baix, esquerra):
+     el traç s'engruixeix i s'aprima com una pinzellada */
+  border-width: 0 3px 11px 6px;
+  filter: url(#pinzell);           /* vores irregulars de pinzell (filtre SVG de l'index.html) */
   border-radius: 50%;
   animation: girar 60s linear infinite;   /* una volta per minut */
 }
@@ -80,6 +85,9 @@ body {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* L'SVG només guarda el filtre: no ha d'ocupar espai */
+.filtres { position: absolute; width: 0; height: 0; }
 
 /* Si l'usuari té activat "reduir moviment" al sistema, el cercle no gira */
 @media (prefers-reduced-motion: reduce) {
