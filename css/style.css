@@ -58,6 +58,10 @@ html { scroll-padding-top: 90px; }
   border-bottom: 1px solid transparent;
 }
 .menu a:hover { border-bottom-color: #BC002D; }
+
+/* Logo petit a l'esquerra del menú: margin-right auto l'empeny a l'esquerra i els enllaços a la dreta */
+.menu .logo-menu { margin-right: auto; padding: 0; border: 0; }
+.logo-menu img { display: block; height: 44px; }
 .menu .menu-reserva { padding: 8px 20px; border: 1px solid #BC002D; }
 .menu .menu-reserva:hover { background: #BC002D; }
 
@@ -252,6 +256,9 @@ html { scroll-padding-top: 90px; }
 @media (max-width: 760px) {
   .hero, .seccio { padding-left: 20px; padding-right: 20px; }
   .menu { justify-content: center; flex-wrap: wrap; gap: 18px; padding: 14px 20px; }
+  .menu .logo-menu { margin-right: 0; width: 100%; display: flex; justify-content: center; }   /* al mòbil, el logo a dalt i els enllaços a sota */
+  .logo-menu img { height: 36px; }
+  html { scroll-padding-top: 140px; }   /* al mòbil el menú fa dues files i és més alt */
   .kanji { display: none; }
   .cercle { width: 340px; height: 340px; margin-top: -190px; margin-left: -170px; }
   .seccio { padding-top: 70px; padding-bottom: 70px; }
