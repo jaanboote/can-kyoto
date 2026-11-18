@@ -152,9 +152,8 @@ body {
 
 .gris { background: #F6F6F4; }
 
-/* Enllaç de text (Com arribar-hi) */
-.enllac { color: #BC002D; font-weight: 500; text-underline-offset: 4px; }
-.enllac:hover { color: #8F0022; }
+/* Mapa de Google de la secció On som */
+.mapa-google { display: block; width: 100%; height: 280px; margin-top: 24px; border: 1px solid #DDDDDD; }
 
 /* Dues columnes: text i foto */
 .dues-col { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
