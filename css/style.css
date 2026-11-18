@@ -168,6 +168,11 @@ body {
 }
 .marc-foto img { position: relative; display: block; width: 100%; }
 
+/* A "La cuina" la foto va a l'esquerra (la columna de text i la de la foto s'alternen)
+   i el marc vermell surt cap a l'esquerra, cap a fora de la pàgina */
+#cuina .marc-foto { order: -1; }
+#cuina .marc-foto::before { left: -20px; right: 20px; }
+
 /* Secció fosca */
 .fosc { background: #0B0B0B; color: #FFFFFF; text-align: center; }
 .fosc p { color: #BDBDBD; margin-left: auto; margin-right: auto; }
