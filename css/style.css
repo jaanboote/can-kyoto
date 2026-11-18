@@ -260,19 +260,18 @@ body {
 .pag-reserves :focus-visible { outline: 2px solid #BC002D; outline-offset: 2px; }
 
 /* Capçalera */
+/* Capçalera negra, com la portada i el peu */
 .cap {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 16px;
-  border-bottom: 1px solid #E5E5E5;
+  padding: 20px 40px;
+  background: #0B0B0B;
 }
 .logo-cap { height: 52px; }
 .menu-reserves { display: flex; gap: 32px; }
-.menu-reserves a { color: #0B0B0B; text-decoration: none; font-size: 15px; padding-bottom: 4px; border-bottom: 1px solid transparent; }
-.menu-reserves a:hover { border-bottom-color: #0B0B0B; }
+.menu-reserves a { color: #FFFFFF; text-decoration: none; font-size: 15px; padding-bottom: 4px; border-bottom: 1px solid transparent; }
+.menu-reserves a:hover { border-bottom-color: #FFFFFF; }
 .menu-reserves a.actiu { color: #BC002D; border-bottom-color: #BC002D; }
 
 /* Dues columnes: reserva a l'esquerra, informació a la dreta */
@@ -460,6 +459,7 @@ textarea { resize: vertical; }
 /* Mòbil */
 @media (max-width: 860px) {
   .pagina { grid-template-columns: 1fr; gap: 40px; padding-top: 32px; }
+  .cap { padding: 16px 20px; }
   .menu-reserves { gap: 16px; }
   .targeta { padding-right: 0; }
   .targeta::before { display: none; }
