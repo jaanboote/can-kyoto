@@ -267,6 +267,9 @@ body {
   align-items: center;
   padding: 20px 40px;
   background: #0B0B0B;
+  position: sticky;   /* es queda enganxada a dalt quan baixes per la pàgina */
+  top: 0;
+  z-index: 10;        /* per sobre del mapa i de la resta del contingut */
 }
 .logo-cap { height: 52px; }
 .menu-reserves { display: flex; gap: 32px; }
