@@ -7,19 +7,7 @@
 
 // ---------- DADES ----------
 
-// Cada taula: número, places i posició al mapa en % (esquerra, dalt, amplada, alçada)
-const taules = [
-  { num: 1, places: 4, x: 20.5, y: 14, amplada: 8, alcada: 17 },
-  { num: 2, places: 4, x: 34, y: 14, amplada: 8, alcada: 17 },
-  { num: 3, places: 4, x: 47.5, y: 14, amplada: 8, alcada: 17 },
-  { num: 4, places: 4, x: 61, y: 14, amplada: 8, alcada: 17 },
-  { num: 5, places: 4, x: 74.5, y: 14, amplada: 8, alcada: 17 },
-  { num: 6, places: 4, x: 88, y: 14, amplada: 8, alcada: 17 },
-  { num: 7, places: 6, x: 21.5, y: 52, amplada: 12, alcada: 17 },
-  { num: 8, places: 6, x: 41.5, y: 52, amplada: 12, alcada: 17 },
-  { num: 9, places: 6, x: 61.5, y: 52, amplada: 12, alcada: 17 },
-  { num: 10, places: 4, x: 84, y: 48, amplada: 8, alcada: 17 },
-];
+// La llista de taules és a js/taules.js
 
 // Taules ocupades d'exemple per a cada torn: { número de taula: persones assegudes }
 const ocupadesExemple = {
@@ -76,8 +64,13 @@ function taulesOcupades() {
   return ocupades;
 }
 
+// "1 persona" o "4 persones"
+function textPersones() {
+  return persones === 1 ? "1 persona" : persones + " persones";
+}
+
 function resum() {
-  let text = persones + " persones, " + dataBonica(data) + ", " + torn;
+  let text = textPersones() + ", " + dataBonica(data) + ", " + torn;
   if (hora) text += " a les " + hora;
   if (taulaTriada) text += ", taula " + taulaTriada;
   return text;
@@ -135,8 +128,21 @@ function pintarDies() {
 function pintarHores() {
   const select = document.querySelector("#hora");
   select.innerHTML = '<option value="">Tria una hora</option>';
+
+  // Si la reserva és per avui, no ensenyem les hores que ja han passat.
+  // Les hores són text "HH:MM", i es poden comparar directament ("13:30" < "14:00").
+  const ara = new Date();
+  const esAvui = dataText(data) === dataText(ara);
+  const horaAra = String(ara.getHours()).padStart(2, "0") + ":" + String(ara.getMinutes()).padStart(2, "0");
+
+  let quantes = 0;
   for (const h of hores[torn]) {
+    if (esAvui && h <= horaAra) continue;
     select.innerHTML += "<option>" + h + "</option>";
+    quantes++;
+  }
+  if (quantes === 0) {
+    select.innerHTML = '<option value="">Avui ja no queden hores: tria un altre dia</option>';
   }
 }
 
@@ -252,7 +258,7 @@ document.querySelector("#pas3").addEventListener("submit", (e) => {
 
   const nom = document.querySelector("#nom").value;
   document.querySelector("#resum-fet").textContent =
-    nom + ", t'esperem el " + dataBonica(data) + " a les " + hora + ". Taula " + taulaTriada + " per a " + persones + " persones.";
+    nom + ", t'esperem el " + dataBonica(data) + " a les " + hora + ". Taula " + taulaTriada + " per a " + textPersones() + ".";
 
   e.target.reset();
   mostrarPas(4);

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Ubuntu:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 
@@ -16,13 +16,13 @@
   <header class="hero">
     <nav class="menu">
       <a href="index.html" class="logo-menu"><img src="img/logotip.png" alt="Can Kyoto, inici"></a>
+      <a href="#sala">La sala</a>
       <a href="#cuina">La cuina</a>
-      <a href="#taula">La taula</a>
       <a href="#on-som">On som</a>
       <a href="reserves.html" class="menu-reserva">Reserva</a>
     </nav>
 
-    <p class="kanji">京都</p>
+    <p class="kanji" lang="ja">京都</p>
 
     <!-- Filtre SVG: deforma la vora del cercle amb soroll perquè sembli pintada amb pinzell -->
     <svg class="filtres" aria-hidden="true">
@@ -69,7 +69,7 @@
     </div>
   </section>
 
-  <!-- 01 LA CUINA -->
+  <!-- LA CUINA -->
   <section class="seccio" id="cuina">
     <div class="contingut dues-col">
       <div>
@@ -84,7 +84,7 @@
     </div>
   </section>
 
-  <!-- 02 LA TAULA -->
+  <!-- LA TAULA QUE ET RECONEIX -->
   <section class="seccio fosc" id="taula">
     <div class="contingut">
       <p class="avantitol">El nostre segell</p>
@@ -92,17 +92,17 @@
 
       <div class="passos">
         <div class="pas-taula">
-          <p class="num">一</p>
+          <p class="num" lang="ja">一</p>
           <h3>T'asseus</h3>
           <p>Un sensor a la taula detecta que hi ha algú, sense càmeres.</p>
         </div>
         <div class="pas-taula">
-          <p class="num">二</p>
+          <p class="num" lang="ja">二</p>
           <h3>La llum s'adapta</h3>
           <p>La llum passa de mode repòs a llum d'acollida, càlida i només per a la vostra taula.</p>
         </div>
         <div class="pas-taula">
-          <p class="num">三</p>
+          <p class="num" lang="ja">三</p>
           <h3>La sala, en directe</h3>
           <p>La web mostra quines taules estan lliures en temps real, i ho veus abans de reservar.</p>
         </div>
@@ -122,7 +122,7 @@
     </div>
   </section>
 
-  <!-- 03 ON SOM -->
+  <!-- ON SOM -->
   <section class="seccio gris" id="on-som">
     <div class="contingut dues-col">
       <div>
@@ -137,7 +137,7 @@
       <div class="horaris">
         <h3>Horaris</h3>
         <p class="fila"><strong>Dinar</strong> <span>13:00 – 16:45</span></p>
-        <p class="fila"><strong>Sopar</strong> <span>17:00 – 22:30</span></p>
+        <p class="fila"><strong>Sopar</strong> <span>19:00 – 22:30</span></p>
         <a href="reserves.html" class="boto">Reserva taula</a>
       </div>
     </div>
@@ -149,12 +149,15 @@
     <p>Cuina mediterrània i japonesa, amb ànima.</p>
     <nav class="menu-peu">
       <a href="index.html">Inici</a>
+      <a href="index.html#sala">La sala</a>
       <a href="reserves.html">Reserves</a>
       <a href="index.html#on-som">On som</a>
     </nav>
     <p class="petit">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
   </footer>
 
-  <script src="js/sala.js"></script>
+  <script src="js/taules.js?v=2"></script>
+  <script src="js/sala.js?v=2"></script>
+  <script src="js/menu.js?v=2"></script>
 </body>
 </html>
