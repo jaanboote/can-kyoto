@@ -238,7 +238,7 @@ body {
   .dues-col, .passos { grid-template-columns: 1fr; gap: 40px; }
   .pas-taula + .pas-taula { border-left: 0; border-top: 1px solid #333333; }
   .xifres { grid-template-columns: 1fr 1fr; row-gap: 30px; }
-  .xifra:nth-child(3) { border-left: 0; }
+  .xifra:nth-child(3) { border-left: 0; }   /* la tercera xifra comença fila nova */
   .xifra strong { font-size: 36px; }
 }
 
