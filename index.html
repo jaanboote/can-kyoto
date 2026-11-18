@@ -44,6 +44,30 @@
     <p class="hero-peu">Poblenou, Barcelona</p>
   </header>
 
+  <!-- LA SALA EN DIRECTE -->
+  <section class="seccio" id="sala">
+    <div class="contingut">
+      <p class="avantitol">La sala, ara</p>
+      <h2>Taules lliures en aquest moment</h2>
+      <p class="sala-estat"><span class="punt"></span> <strong id="lliures"></strong>. S'actualitza sol.</p>
+
+      <div class="llegenda">
+        <span><i class="quadre lliure"></i> Lliure</span>
+        <span><i class="quadre ocupada"></i> Ocupada</span>
+        <span><i class="quadre assegut"></i> Persona asseguda</span>
+      </div>
+
+      <div class="mapa-scroll">
+        <div class="mapa" id="mapa-sala">
+          <div class="zona entrada">Entrada</div>
+          <div class="zona barra">Barra</div>
+        </div>
+      </div>
+
+      <a href="reserves.html" class="boto boto-sala">Reserva una taula lliure</a>
+    </div>
+  </section>
+
   <!-- 01 LA CUINA -->
   <section class="seccio" id="cuina">
     <div class="contingut dues-col">
@@ -122,5 +146,6 @@
     <p class="petit">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
   </footer>
 
+  <script src="js/sala.js"></script>
 </body>
 </html>
