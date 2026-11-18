@@ -152,6 +152,10 @@ body {
 
 .gris { background: #F6F6F4; }
 
+/* Enllaç de text (Com arribar-hi) */
+.enllac { color: #BC002D; font-weight: 500; text-underline-offset: 4px; }
+.enllac:hover { color: #8F0022; }
+
 /* Dues columnes: text i foto */
 .dues-col { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
 
