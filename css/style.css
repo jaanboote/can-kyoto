@@ -32,8 +32,23 @@ body {
   overflow: hidden;
 }
 
-/* Menú de dalt a la dreta */
-.menu { display: flex; justify-content: flex-end; gap: 36px; }
+/* Menú de dalt a la dreta: fix, es queda a dalt quan baixes per la pàgina */
+.menu {
+  position: fixed;             /* fix a la finestra (sticky no serveix: el menú és dins de la portada) */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;                 /* per sobre de les seccions */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 36px;
+  padding: 20px 40px;
+  background: #0B0B0B;         /* fons negre perquè es llegeixi a sobre de les seccions blanques */
+}
+
+/* Quan cliques un enllaç (#cuina...), la secció no queda tapada pel menú fix */
+html { scroll-padding-top: 90px; }
 .menu a {
   color: #FFFFFF;
   text-decoration: none;
@@ -236,7 +251,7 @@ body {
 /* ---------- Mòbil ---------- */
 @media (max-width: 760px) {
   .hero, .seccio { padding-left: 20px; padding-right: 20px; }
-  .menu { justify-content: center; flex-wrap: wrap; gap: 18px; }
+  .menu { justify-content: center; flex-wrap: wrap; gap: 18px; padding: 14px 20px; }
   .kanji { display: none; }
   .cercle { width: 340px; height: 340px; margin-top: -190px; margin-left: -170px; }
   .seccio { padding-top: 70px; padding-bottom: 70px; }
