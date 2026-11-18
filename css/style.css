@@ -188,8 +188,18 @@ body {
 
 /* La sala en directe */
 .sala-estat { color: #3A3A3A; }
-.sala-estat strong { color: #15803D; font-weight: 500; }
-.punt { display: inline-block; width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; background: #15803D; }
+/* El nombre de taules lliures és el que més importa: gran i en verd */
+.sala-estat strong { font-family: "Merriweather", serif; font-size: 24px; font-weight: 400; color: #15803D; }
+.punt { display: inline-block; width: 10px; height: 10px; margin-right: 8px; border-radius: 50%; background: #15803D; vertical-align: middle; animation: batec 2s infinite; }
+#sala .mapa { background-color: #FFFFFF; }   /* el plànol blanc destaca sobre el fons gris */
+
+/* El punt verd s'apaga i s'encén: indica que les dades són en directe */
+@keyframes batec {
+  50% { opacity: 0.3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .punt { animation: none; }
+}
 #sala .llegenda { margin-top: 28px; }
 #sala .taula { cursor: default; }                          /* aquí només es mira, no es tria */
 #sala .tauler { transition: background-color 0.6s; }       /* el canvi de color es nota */
