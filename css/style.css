@@ -187,7 +187,7 @@ body {
 }
 .pas-taula { padding: 40px 32px; }
 .pas-taula + .pas-taula { border-left: 1px solid #333333; }   /* línia entre columnes */
-.num { font-family: "Zen Kaku Gothic New", sans-serif; font-size: 56px; line-height: 1.2; color: #BC002D !important; margin-bottom: 10px !important; }
+.pas-taula .num { font-family: "Zen Kaku Gothic New", sans-serif; font-size: 56px; line-height: 1.2; color: #BC002D !important; margin-bottom: 10px !important; }
 .pas-taula h3 { font-family: "Merriweather", serif; font-weight: 400; font-size: 19px; margin-bottom: 10px; }
 .pas-taula p { font-size: 15px; }
 
