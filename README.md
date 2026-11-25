@@ -7,6 +7,7 @@ Projecte ASIX 0379 (curs 26/27) de Jan i Josep. Publicada amb GitHub Pages.
 
 - `index.html`: portada, la sala en directe, la cuina, la taula que et reconeix, xifres i on som.
 - `reserves.html`: reserva en tres passos (dia i persones, hora i taula, dades del client).
+- `carta.html`: la carta, un flipbook de Heyzine incrustat, en català, castellà i anglès.
 
 ## Carpetes
 
@@ -15,6 +16,7 @@ Projecte ASIX 0379 (curs 26/27) de Jan i Josep. Publicada amb GitHub Pages.
 - `js/sala.js`: pinta el plànol de la portada amb les taules lliures i ocupades.
 - `js/reserves.js`: el procés de reserva.
 - `js/menu.js`: ensenya el logo petit al menú de la portada quan baixes.
+- `js/carta.js`: canvia l'idioma del flipbook de la carta.
 - `img/`: logotip i foto de la sala.
 - `php/`: reservat per a la part de servidor.
 

@@ -318,7 +318,7 @@ html { scroll-padding-top: 90px; }
 }
 .logo-cap { height: 52px; }
 .menu-reserves { display: flex; gap: 32px; }
-.menu-reserves a { color: var(--blanc); text-decoration: none; font-size: 15px; padding-bottom: 4px; border-bottom: 1px solid transparent; }
+.menu-reserves a { white-space: nowrap; color: var(--blanc); text-decoration: none; font-size: 15px; padding-bottom: 4px; border-bottom: 1px solid transparent; }
 .menu-reserves a:hover { border-bottom-color: var(--blanc); }
 .menu-reserves a.actiu { color: var(--vermell); border-bottom-color: var(--vermell); }
 
@@ -513,4 +513,41 @@ textarea { resize: vertical; }
   .targeta { padding-right: 0; }
   .targeta::before { display: none; }
   .torn { width: auto; flex: 1; }
+}
+
+
+/* ==========================================================
+   Carta (carta.html)
+   La carta és un flipbook de Heyzine dins d'un iframe.
+   Els botons canvien l'idioma (js/carta.js)
+   ========================================================== */
+
+.carta-flip { max-width: 1200px; margin: 0 auto; padding: 48px 16px 72px; }
+.carta-flip h1 { font-family: var(--lletra-titols); font-weight: 400; font-size: 40px; }
+
+.idiomes { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+.idioma { padding: 8px 20px; border: 1px solid var(--negre); color: var(--negre); text-decoration: none; font-size: 15px; }
+.idioma:hover { border-color: var(--vermell); color: var(--vermell); }
+.idioma[aria-pressed="true"] { background: var(--negre); color: var(--blanc); }
+
+/* El flipbook ensenya dues pàgines A4 una al costat de l'altra: per això és apaïsat */
+.flipbook { aspect-ratio: 3 / 2; max-height: 85vh; width: 100%; background: var(--negre); }
+.flipbook iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+.carta-flip .nota { margin-top: 16px; font-size: 14px; color: var(--gris); }
+.carta-flip .nota a { color: var(--negre); }
+.carta-flip .nota a:hover { color: var(--vermell); }
+
+/* Al mòbil Heyzine ensenya una sola pàgina: el marc és vertical */
+@media (max-width: 760px) {
+  .flipbook { aspect-ratio: 3 / 4; }
+  .carta-flip h1 { font-size: 32px; }
+}
+
+/* Mòbil petit: amb quatre enllaços la capçalera no hi cap en una fila.
+   El logo va a dalt i els enllaços a sota (també a reserves) */
+@media (max-width: 480px) {
+  .cap { flex-direction: column; gap: 10px; padding: 12px 16px; }
+  .logo-cap { height: 40px; }
+  .menu-reserves { gap: 20px; }
 }
