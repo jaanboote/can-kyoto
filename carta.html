@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Ubuntu:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400&display=swap" rel="stylesheet">
   <link rel="icon" href="img/favicon.png">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -25,7 +25,14 @@
   </header>
 
   <main class="carta-flip">
-    <h1>La carta</h1>
+    <!-- Títol: a l'esquerra el text, a la dreta "carta" en japonès (お品書き) en vertical -->
+    <div class="carta-cap">
+      <div>
+        <h1>La carta</h1>
+        <p>Cuina d'autor: tècnica japonesa i producte català de temporada.</p>
+      </div>
+      <p class="carta-kanji" lang="ja">お品書き</p>
+    </div>
 
     <!-- Botons d'idioma: cada un porta l'enllaç del seu flipbook de Heyzine (js/carta.js) -->
     <div class="idiomes" role="group" aria-label="Idioma de la carta">
@@ -41,7 +48,7 @@
               allow="autoplay; fullscreen; clipboard-write" scrolling="no" loading="lazy"></iframe>
     </div>
 
-    <p class="nota"><a id="pantalla-completa" href="https://heyzine.com/flip-book/33c3527ae2.html" target="_blank" rel="noopener">Obrir la carta a pantalla completa</a></p>
+    <p class="carta-nota"><a id="pantalla-completa" href="https://heyzine.com/flip-book/33c3527ae2.html" target="_blank" rel="noopener">Obrir la carta a pantalla completa</a></p>
   </main>
 
   <!-- PEU -->
