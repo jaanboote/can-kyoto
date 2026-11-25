@@ -3,107 +3,91 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Can Kyoto, restaurant de fusió mediterrània i japonesa</title>
-  <meta name="description" content="Can Kyoto, restaurant de fusió mediterrània i japonesa al Poblenou, Barcelona.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Ubuntu:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+  <title>Can Kyoto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;1,400&family=Ubuntu:wght@400;500&family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
   <link rel="icon" href="img/favicon.png">
-  <link rel="stylesheet" href="css/style.css?v=9">
-  <link rel="stylesheet" href="css/taules.css?v=1">
-  <link rel="stylesheet" href="css/portada.css?v=1">
-  <link rel="stylesheet" href="css/seccions.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/taules.css?v=2">
+  <link rel="stylesheet" href="css/portada.css?v=2">
+  <link rel="stylesheet" href="css/seccions.css?v=2">
 </head>
 <body>
 
-  <!-- PORTADA -->
-  <header class="hero">
+  <header id="portada">
     <nav class="menu">
-      <a href="#sala">La sala</a>
-      <a href="#cuina">La cuina</a>
-      <a href="carta.html">Carta</a>
-      <a href="#on-som">On som</a>
-      <a href="reserves.html" class="menu-reserva">Reserva</a>
+      <ul>
+        <li><a href="#sala">La sala</a></li>
+        <li><a href="#cuina">La cuina</a></li>
+        <li><a href="carta.html">Carta</a></li>
+        <li><a href="#on-som">On som</a></li>
+        <li><a href="reserves.html" class="boto-menu">Reserva</a></li>
+      </ul>
     </nav>
 
-    <p class="kanji" lang="ja">京都</p>
+    <p id="kanji">京都</p>
+    <div id="cercle"></div>
 
-    <!-- Filtre SVG: deforma la vora del cercle amb soroll perquè sembli pintada amb pinzell -->
-    <svg class="filtres" aria-hidden="true">
-      <filter id="pinzell">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="soroll" />
-        <feDisplacementMap in="SourceGraphic" in2="soroll" scale="4" />
-      </filter>
-    </svg>
-    <div class="cercle"></div>
-
-    <div class="hero-centre">
-      <img src="img/logotip.png" alt="Can Kyoto" class="logo">
-      <p class="subtitol">Restaurant de fusió mediterrània i japonesa</p>
-      <div class="hero-botons">
+    <div id="portada-centre">
+      <img src="img/logotip.png" alt="Can Kyoto" id="logo">
+      <p id="subtitol">Restaurant de fusió mediterrània i japonesa</p>
+      <div>
         <a href="reserves.html" class="boto">Reserva taula</a>
-        <a href="#cuina" class="boto boto-linia">Descobreix-nos</a>
+        <a href="#cuina" class="boto boto-blanc">Descobreix-nos</a>
       </div>
     </div>
 
-    <p class="hero-peu">Poblenou, Barcelona</p>
+    <p id="barri">Poblenou, Barcelona</p>
   </header>
 
-  <!-- LA SALA EN DIRECTE -->
   <section class="seccio gris" id="sala">
     <div class="contingut">
       <h2>Taules lliures en aquest moment</h2>
-      <p class="sala-estat"><span class="punt"></span> <strong id="lliures"></strong>. S'actualitza sol.</p>
+      <p><strong id="lliures"></strong>. S'actualitza sol.</p>
 
       <div class="llegenda">
         <span><i class="quadre lliure"></i> Lliure</span>
         <span><i class="quadre ocupada"></i> Ocupada</span>
-        <span><i class="quadre assegut"></i> Persona asseguda</span>
       </div>
 
       <div class="mapa-scroll">
         <div class="mapa" id="mapa-sala">
-          <div class="zona entrada">Entrada</div>
-          <div class="zona barra">Barra</div>
+          <div class="entrada">Entrada</div>
+          <div class="barra">Barra</div>
         </div>
       </div>
 
-      <a href="reserves.html" class="boto boto-sala">Reserva una taula lliure</a>
+      <a href="reserves.html" class="boto">Reserva una taula lliure</a>
     </div>
   </section>
 
-  <!-- LA CUINA -->
   <section class="seccio" id="cuina">
-    <div class="contingut dues-col">
-      <div>
+    <div class="contingut" id="cuina-graella">
+      <img src="img/sala.jpg" alt="Taula de la sala de Can Kyoto" id="cuina-foto">
+      <div id="cuina-text">
         <h2>El Mediterrani amb tècnica japonesa</h2>
         <p>A Can Kyoto cuinem producte d'aquí amb tècniques i estètica japoneses. El resultat és una carta de fusió pensada per a sopars tranquils, celebracions i àpats d'empresa.</p>
         <p>Treballem amb producte de proximitat i col·laborem amb Too Good To Go per no llençar menjar.</p>
       </div>
-      <div class="marc-foto">
-        <img src="img/sala.jpg" alt="Taula de fusta de la sala de Can Kyoto sota un llum càlid">
-      </div>
     </div>
   </section>
 
-  <!-- LA TAULA QUE ET RECONEIX -->
   <section class="seccio fosc" id="taula">
     <div class="contingut">
       <h2>Una taula que et reconeix</h2>
 
-      <div class="passos">
-        <div class="pas-taula">
-          <p class="num" lang="ja">一</p>
+      <div id="passos">
+        <div class="pas">
+          <p class="numero">一</p>
           <h3>T'asseus</h3>
           <p>Un sensor a la taula detecta que hi ha algú, sense càmeres.</p>
         </div>
-        <div class="pas-taula">
-          <p class="num" lang="ja">二</p>
+        <div class="pas">
+          <p class="numero">二</p>
           <h3>La llum s'adapta</h3>
           <p>La llum passa de mode repòs a llum d'acollida, càlida i només per a la vostra taula.</p>
         </div>
-        <div class="pas-taula">
-          <p class="num" lang="ja">三</p>
+        <div class="pas">
+          <p class="numero">三</p>
           <h3>La sala, en directe</h3>
           <p>La web mostra quines taules estan lliures en temps real, i ho veus abans de reservar.</p>
         </div>
@@ -113,50 +97,46 @@
     </div>
   </section>
 
-  <!-- XIFRES -->
   <section class="seccio">
-    <div class="contingut xifres">
-      <div class="xifra"><strong>46</strong><span>comensals a la sala</span></div>
-      <div class="xifra"><strong>8</strong><span>places a la barra</span></div>
-      <div class="xifra"><strong>10</strong><span>taules a la sala</span></div>
-      <div class="xifra"><strong>283 m²</strong><span>de local a Gran Via</span></div>
+    <div class="contingut" id="xifres">
+      <div class="xifra"><strong>46</strong>comensals a la sala</div>
+      <div class="xifra"><strong>8</strong>places a la barra</div>
+      <div class="xifra"><strong>10</strong>taules a la sala</div>
+      <div class="xifra"><strong>283 m²</strong>de local a Gran Via</div>
     </div>
   </section>
 
-  <!-- ON SOM -->
   <section class="seccio gris" id="on-som">
-    <div class="contingut dues-col">
-      <div>
+    <div class="contingut" id="on-som-graella">
+      <div id="adreca">
         <h2>Al cor del Poblenou</h2>
         <p>Gran Via de les Corts Catalanes, 960, 08018 Barcelona (Poblenou), a tocar de Glòries.</p>
-        <p>Hi arribes fàcilment amb metro, tramvia, autobús o Bicing. A prop hi ha el Parc Central del Poblenou i aparcaments públics.</p>
-        <!-- Mapa de Google incrustat (no cal clau d'API amb output=embed) -->
-        <iframe class="mapa-google" title="Mapa de la ubicació de Can Kyoto" loading="lazy"
-          src="https://www.google.com/maps?q=41.409875,2.195916&amp;z=17&amp;output=embed"></iframe>
+        <p>Hi arribes fàcilment amb metro, tramvia, autobús o Bicing.</p>
+        <iframe id="mapa-google" title="Mapa de Can Kyoto" src="https://www.google.com/maps?q=41.409875,2.195916&amp;z=17&amp;output=embed"></iframe>
       </div>
-      <div class="horaris">
+      <div id="horaris">
         <h3>Horaris</h3>
-        <p class="fila"><strong>Dinar</strong> <span>13:00 – 16:45</span></p>
-        <p class="fila"><strong>Sopar</strong> <span>19:00 – 22:30</span></p>
+        <p class="fila"><strong>Dinar</strong> 13:00 – 16:45</p>
+        <p class="fila"><strong>Sopar</strong> 19:00 – 22:30</p>
         <a href="reserves.html" class="boto">Reserva taula</a>
       </div>
     </div>
   </section>
 
-  <!-- PEU -->
-  <footer class="peu-portada">
+  <footer class="peu">
     <p>Cuina mediterrània i japonesa, amb ànima.</p>
     <nav class="menu-peu">
-      <a href="index.html">Inici</a>
-      <a href="index.html#sala">La sala</a>
-      <a href="carta.html">Carta</a>
-      <a href="reserves.html">Reserves</a>
-      <a href="index.html#on-som">On som</a>
+      <ul>
+        <li><a href="index.html">Inici</a></li>
+        <li><a href="carta.html">Carta</a></li>
+        <li><a href="reserves.html">Reserves</a></li>
+        <li><a href="index.html#on-som">On som</a></li>
+      </ul>
     </nav>
-    <p class="petit">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
+    <p class="copyright">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
   </footer>
 
-  <script src="js/taules.js?v=3"></script>
-  <script src="js/sala.js?v=3"></script>
+  <script src="js/taules.js?v=4"></script>
+  <script src="js/sala.js?v=4"></script>
 </body>
 </html>

@@ -1,5 +1,4 @@
-/* Estils de totes les pàgines: colors, capçalera, peu i botons
-negre #0B0B0B
+/*  negre #0B0B0B
 blanc #FFFFFF
 vermell #BC002D
 */
@@ -10,20 +9,11 @@ vermell #BC002D
   --vermell: #bc002d;
   --vermell-fosc: #8f0022;
   --verd: #15803d;
-  --verd-fosc: #116a32;
-  --text: #3a3a3a;
   --gris: #6b6b6b;
-  --gris-clar: #888888;
-  --gris-suau: #bdbdbd;
-  --linia-fosca: #333333;
+  --gris-clar: #bdbdbd;
   --linia: #dddddd;
-  --linia-clara: #e5e5e5;
-  --vora-opcio: #cfcfcf;
+  --linia-fosca: #333333;
   --fons-gris: #f6f6f4;
-  --quadricula: #f1f1f1;
-  --taula-petita: #d1d5db;
-  --text-taula-petita: #4b5563;
-  --vermell-mig: rgba(188, 0, 45, 0.5);
   --lletra-text: "Ubuntu", sans-serif;
   --lletra-titols: "Merriweather", serif;
   --lletra-japonesa: "Zen Kaku Gothic New", sans-serif;
@@ -35,17 +25,18 @@ vermell #BC002D
   padding: 0;
 }
 
-html,
-body {
-  overflow-x: clip;
-}
-
 body {
   font-family: var(--lletra-text);
-  font-size: 16px;
   line-height: 1.6;
   color: var(--negre);
   background: var(--blanc);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--lletra-titols);
+  font-weight: 400;
 }
 
 .boto {
@@ -55,101 +46,88 @@ body {
   background: var(--vermell);
   color: var(--blanc);
   text-decoration: none;
-  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.5px;
 }
+
 .boto:hover {
   background: var(--vermell-fosc);
-  border-color: var(--vermell-fosc);
 }
-.boto-linia {
+
+.boto-blanc {
   background: transparent;
   border-color: var(--blanc);
 }
-.boto-linia:hover {
-  background: var(--blanc);
-  border-color: var(--blanc);
-  color: var(--negre);
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
-.peu-portada {
-  padding: 64px 24px 48px;
-  background: var(--negre);
-  color: var(--gris-suau);
-  text-align: center;
-  font-size: 15px;
+.menu a {
+  color: var(--blanc);
+  text-decoration: none;
 }
-.menu-peu {
+
+.menu a:hover,
+.menu a.actiu {
+  color: var(--vermell);
+}
+
+.capcalera {
   display: flex;
-  justify-content: center;
-  gap: 28px;
-  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--negre);
 }
+
+.capcalera img {
+  height: 44px;
+}
+
+.peu {
+  padding: 48px 16px;
+  background: var(--negre);
+  color: var(--gris-clar);
+  text-align: center;
+}
+
+.menu-peu ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin: 20px 0;
+}
+
 .menu-peu a {
   color: var(--blanc);
   text-decoration: none;
 }
-.menu-peu a:hover {
-  color: var(--vermell);
-}
-.peu-portada .petit {
-  margin-top: 24px;
-  padding-top: 24px;
+
+.copyright {
+  padding-top: 20px;
   border-top: 1px solid var(--linia-fosca);
   font-size: 12px;
-  color: var(--gris-clar);
 }
 
-.cap {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background: var(--negre);
-}
-.logo-cap {
-  height: 52px;
-}
-.menu-reserves {
-  display: flex;
-  gap: 32px;
-}
-.menu-reserves a {
-  white-space: nowrap;
-  color: var(--blanc);
-  text-decoration: none;
-  font-size: 15px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid transparent;
-}
-.menu-reserves a:hover {
-  border-bottom-color: var(--blanc);
-}
-.menu-reserves a.actiu {
-  color: var(--vermell);
-  border-bottom-color: var(--vermell);
-}
+@media screen and (min-width: 1000px) {
+  .capcalera {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 40px;
+  }
 
-@media (max-width: 860px) {
-  .cap {
-    padding: 16px 20px;
+  .capcalera img {
+    height: 52px;
   }
-  .menu-reserves {
-    gap: 16px;
-  }
-}
 
-@media (max-width: 480px) {
-  .cap {
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px 16px;
-  }
-  .logo-cap {
-    height: 40px;
-  }
-  .menu-reserves {
-    gap: 20px;
+  .menu ul {
+    gap: 32px;
   }
 }

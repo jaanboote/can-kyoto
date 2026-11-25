@@ -1,77 +1,63 @@
-/* Reserves (reserves.html) */
-
-.pagina {
+#reserva-graella {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: 48px;
+  grid-template-columns: 1fr;
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 48px 16px;
+  padding: 32px 16px;
 }
 
-.targeta {
-  position: relative;
+#reserva {
   min-width: 0;
-  padding-right: 56px;
 }
 
-.targeta::before {
-  content: "予約";
-  position: absolute;
-  font-family: var(--lletra-japonesa);
-  top: 0;
-  right: 0;
-  writing-mode: vertical-rl;
-  font-size: 26px;
-  letter-spacing: 14px;
-  color: var(--vermell);
-}
-
-.targeta h2 {
-  font-family: var(--lletra-titols);
-  font-weight: 400;
+#reserva h2 {
   font-size: 22px;
   margin: 40px 0 16px;
 }
 
-.info {
-  border: 1px solid var(--linia-clara);
+#kanji-reserva {
+  display: none;
+}
+
+#info {
+  border: 1px solid var(--linia);
   align-self: start;
 }
-.info img {
+
+#info img {
   display: block;
   width: 100%;
 }
+
 .info-bloc {
   padding: 24px;
-}
-.info-bloc + .info-bloc {
-  border-top: 1px solid var(--linia-clara);
-}
-.info-bloc h3 {
-  font-family: var(--lletra-titols);
-  font-weight: 400;
-  font-size: 18px;
-  margin-bottom: 12px;
-}
-.info-bloc p {
-  margin-bottom: 12px;
-  color: var(--text);
+  border-top: 1px solid var(--linia);
 }
 
-.progres {
+.info-bloc h3 {
+  margin-bottom: 12px;
+}
+
+.info-bloc p {
+  margin-bottom: 12px;
+}
+
+#progres {
   display: flex;
   gap: 12px;
   list-style: none;
 }
-.progres li {
+
+#progres li {
   flex: 1;
   padding-top: 10px;
-  border-top: 2px solid var(--linia-clara);
+  border-top: 2px solid var(--linia);
   font-size: 14px;
-  color: var(--gris-clar);
+  color: var(--gris);
 }
-.progres li.actiu {
+
+#progres li.actiu {
   border-top-color: var(--vermell);
   color: var(--negre);
 }
@@ -81,33 +67,25 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .opcio {
   min-width: 56px;
   padding: 12px 16px;
-  border: 1px solid var(--vora-opcio);
+  border: 1px solid var(--linia);
   background: var(--blanc);
-  color: var(--negre);
   font-family: inherit;
   font-size: 16px;
   cursor: pointer;
 }
-.opcio:hover {
-  border-color: var(--negre);
-}
+
 .opcio.triat {
   background: var(--negre);
-  border-color: var(--negre);
   color: var(--blanc);
 }
+
 .torn {
-  width: 190px;
+  flex: 1;
   text-align: left;
-}
-.torn b {
-  display: block;
-  font-family: var(--lletra-titols);
-  font-size: 18px;
-  font-weight: 400;
 }
 
 .nota {
@@ -117,108 +95,92 @@
 }
 
 .resum {
-  padding: 4px 0 4px 16px;
   margin: 32px 0 24px;
+  padding-left: 16px;
   border-left: 2px solid var(--vermell);
-  color: var(--text);
+}
+
+.botons {
+  display: flex;
+  gap: 12px;
 }
 
 .continuar,
 .tornar {
   margin-top: 40px;
   padding: 16px 32px;
-  border: 1px solid var(--vermell);
+  border: 1px solid var(--negre);
+  background: var(--blanc);
   font-family: inherit;
   font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 1px;
   cursor: pointer;
 }
+
 .continuar {
   width: 100%;
+  border-color: var(--vermell);
   background: var(--vermell);
   color: var(--blanc);
 }
+
 .continuar:hover {
   background: var(--vermell-fosc);
-  border-color: var(--vermell-fosc);
-}
-.tornar {
-  background: var(--blanc);
-  border-color: var(--negre);
-  color: var(--negre);
-}
-.tornar:hover {
-  background: var(--negre);
-  color: var(--blanc);
-}
-.botons {
-  display: flex;
-  gap: 12px;
 }
 
 label {
   display: block;
   margin: 24px 0 4px;
   font-size: 14px;
-  color: var(--text);
 }
+
 input,
 select,
 textarea {
   width: 100%;
+  max-width: 400px;
   padding: 10px 0;
   border: 0;
   border-bottom: 1px solid var(--negre);
-  background: transparent;
   font-family: inherit;
   font-size: 16px;
 }
-input:focus,
-select:focus,
-textarea:focus {
-  border-bottom-color: var(--vermell);
-}
-select,
-input[type="date"] {
-  max-width: 260px;
-  cursor: pointer;
-}
-textarea {
-  resize: vertical;
-}
-.check {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-}
-.check input {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--vermell);
-}
-.error {
-  min-height: 24px;
-  margin-top: 16px;
-  color: var(--vermell);
-  font-weight: 500;
+
+.acceptar input {
+  width: auto;
 }
 
-@media (max-width: 860px) {
-  .pagina {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
-    padding-top: 32px;
+.error {
+  margin-top: 16px;
+  color: var(--vermell);
+}
+
+@media screen and (min-width: 1000px) {
+  #reserva-graella {
+    grid-template-columns: 1fr 50px 320px;
+    grid-template-areas: "RESERVA KANJI INFO";
+    padding: 48px 16px;
   }
-  .targeta {
-    padding-right: 0;
+
+  #reserva {
+    grid-area: RESERVA;
   }
-  .targeta::before {
-    display: none;
+
+  #kanji-reserva {
+    display: block;
+    grid-area: KANJI;
+    writing-mode: vertical-rl;
+    font-family: var(--lletra-japonesa);
+    font-size: 26px;
+    letter-spacing: 14px;
+    color: var(--vermell);
   }
+
+  #info {
+    grid-area: INFO;
+  }
+
   .torn {
-    width: auto;
-    flex: 1;
+    flex: none;
+    width: 190px;
   }
 }

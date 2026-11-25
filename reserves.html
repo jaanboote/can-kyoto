@@ -4,39 +4,35 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reserves de Can Kyoto</title>
-  <meta name="description" content="Reserva taula a Can Kyoto: tria el dia, l'hora i la taula al plànol de la sala.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Ubuntu:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Ubuntu:wght@400;500&family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
   <link rel="icon" href="img/favicon.png">
-  <link rel="stylesheet" href="css/style.css?v=9">
-  <link rel="stylesheet" href="css/taules.css?v=1">
-  <link rel="stylesheet" href="css/reserves.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/taules.css?v=2">
+  <link rel="stylesheet" href="css/reserves.css?v=2">
 </head>
-<body class="pag-reserves">
+<body>
 
-  <!-- CAPÇALERA -->
-  <header class="cap">
-    <a href="index.html"><img src="img/logotip.png" alt="Can Kyoto" class="logo-cap"></a>
-    <nav class="menu-reserves">
-      <a href="index.html#sala">La sala</a>
-      <a href="carta.html">Carta</a>
-      <a href="reserves.html" class="actiu">Reserves</a>
-      <a href="index.html#on-som">On som</a>
+  <header class="capcalera">
+    <a href="index.html"><img src="img/logotip.png" alt="Can Kyoto"></a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html#sala">La sala</a></li>
+        <li><a href="carta.html">Carta</a></li>
+        <li><a href="reserves.html" class="actiu">Reserves</a></li>
+        <li><a href="index.html#on-som">On som</a></li>
+      </ul>
     </nav>
   </header>
 
-  <main class="pagina">
-    <div class="targeta">
+  <main id="reserva-graella">
+    <div id="reserva">
 
-      <!-- Indicador de passos -->
-      <ol class="progres">
+      <ol id="progres">
         <li id="marca1" class="actiu">1. Dia i persones</li>
         <li id="marca2">2. Hora i taula</li>
         <li id="marca3">3. Les teves dades</li>
       </ol>
 
-      <!-- PAS 1: persones, dia i torn -->
       <section id="pas1">
         <h2>Persones</h2>
         <div class="opcions" id="persones">
@@ -50,18 +46,17 @@
         <p class="nota">Per a grups de més de 6 persones, truca'ns.</p>
 
         <h2>Data</h2>
-        <input type="date" id="data" aria-label="Data">
+        <input type="date" id="data">
 
         <h2>Reserva per</h2>
         <div class="opcions" id="torns">
-          <button type="button" class="opcio torn" data-valor="dinar"><b>Dinar</b>13:00 – 16:45</button>
-          <button type="button" class="opcio torn triat" data-valor="sopar"><b>Sopar</b>19:00 – 22:30</button>
+          <button type="button" class="opcio torn" data-valor="dinar"><b>Dinar</b><br>13:00 – 16:45</button>
+          <button type="button" class="opcio torn triat" data-valor="sopar"><b>Sopar</b><br>19:00 – 22:30</button>
         </div>
 
         <button type="button" class="continuar" id="anar-pas2">Continuar</button>
       </section>
 
-      <!-- PAS 2: hora i taula -->
       <section id="pas2" hidden>
         <p class="resum" id="resum2"></p>
 
@@ -73,13 +68,12 @@
           <span><i class="quadre lliure"></i> Lliure</span>
           <span><i class="quadre ocupada"></i> Ocupada</span>
           <span><i class="quadre petita"></i> Massa petita</span>
-          <span><i class="quadre assegut"></i> Persona asseguda</span>
         </div>
 
         <div class="mapa-scroll">
           <div class="mapa" id="mapa">
-            <div class="zona entrada">Entrada</div>
-            <div class="zona barra">Barra</div>
+            <div class="entrada">Entrada</div>
+            <div class="barra">Barra</div>
           </div>
         </div>
 
@@ -91,23 +85,22 @@
         </div>
       </section>
 
-      <!-- PAS 3: dades del client -->
       <form id="pas3" hidden>
         <p class="resum" id="resum3"></p>
 
         <label for="nom">Nom i cognoms *</label>
-        <input id="nom" name="nom" required>
+        <input id="nom" required>
 
         <label for="telefon">Telèfon *</label>
-        <input id="telefon" name="telefon" type="tel" required pattern="[0-9 ]{9,15}" placeholder="600 123 456">
+        <input id="telefon" type="tel" required placeholder="600 123 456">
 
         <label for="correu">Correu electrònic *</label>
-        <input id="correu" name="correu" type="email" required>
+        <input id="correu" type="email" required>
 
         <label for="comentaris">Comentaris (al·lèrgies, celebracions...)</label>
-        <textarea id="comentaris" name="comentaris" rows="3"></textarea>
+        <textarea id="comentaris" rows="3"></textarea>
 
-        <label class="check"><input type="checkbox" required> Accepto la política de privacitat (RGPD) *</label>
+        <label class="acceptar"><input type="checkbox" required> Accepto la política de privacitat (RGPD) *</label>
 
         <div class="botons">
           <button type="button" class="tornar" id="tornar-pas2">Enrere</button>
@@ -115,18 +108,17 @@
         </div>
       </form>
 
-      <!-- CONFIRMACIÓ -->
       <section id="fet" hidden>
         <h2>Reserva confirmada</h2>
         <p id="resum-fet"></p>
         <p class="nota">Recorda que Can Kyoto és un local només per a adults.</p>
         <button type="button" class="continuar" id="nova">Fer una altra reserva</button>
       </section>
-
     </div>
 
-    <!-- COLUMNA DRETA: foto, horaris i ubicació -->
-    <aside class="info">
+    <p id="kanji-reserva">予約</p>
+
+    <aside id="info">
       <img src="img/sala.jpg" alt="Sala de Can Kyoto">
       <div class="info-bloc">
         <h3>Horaris</h3>
@@ -140,20 +132,20 @@
     </aside>
   </main>
 
-  <!-- PEU -->
-  <footer class="peu-portada">
+  <footer class="peu">
     <p>Cuina mediterrània i japonesa, amb ànima.</p>
     <nav class="menu-peu">
-      <a href="index.html">Inici</a>
-      <a href="index.html#sala">La sala</a>
-      <a href="carta.html">Carta</a>
-      <a href="reserves.html">Reserves</a>
-      <a href="index.html#on-som">On som</a>
+      <ul>
+        <li><a href="index.html">Inici</a></li>
+        <li><a href="carta.html">Carta</a></li>
+        <li><a href="reserves.html">Reserves</a></li>
+        <li><a href="index.html#on-som">On som</a></li>
+      </ul>
     </nav>
-    <p class="petit">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
+    <p class="copyright">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
   </footer>
 
-  <script src="js/taules.js?v=3"></script>
-  <script src="js/reserves.js?v=3"></script>
+  <script src="js/taules.js?v=4"></script>
+  <script src="js/reserves.js?v=4"></script>
 </body>
 </html>

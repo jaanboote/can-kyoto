@@ -4,67 +4,58 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>La carta de Can Kyoto</title>
-  <meta name="description" content="La carta de Can Kyoto en català, castellà i anglès: cuina d'autor que uneix la tècnica japonesa amb el producte català.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Ubuntu:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Ubuntu:wght@400;500&family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
   <link rel="icon" href="img/favicon.png">
-  <link rel="stylesheet" href="css/style.css?v=9">
-  <link rel="stylesheet" href="css/carta.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/carta.css?v=2">
 </head>
 <body>
 
-  <!-- CAPÇALERA (la mateixa que a reserves) -->
-  <header class="cap">
-    <a href="index.html"><img src="img/logotip.png" alt="Can Kyoto" class="logo-cap"></a>
-    <nav class="menu-reserves">
-      <a href="index.html#sala">La sala</a>
-      <a href="carta.html" class="actiu">Carta</a>
-      <a href="reserves.html">Reserves</a>
-      <a href="index.html#on-som">On som</a>
+  <header class="capcalera">
+    <a href="index.html"><img src="img/logotip.png" alt="Can Kyoto"></a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html#sala">La sala</a></li>
+        <li><a href="carta.html" class="actiu">Carta</a></li>
+        <li><a href="reserves.html">Reserves</a></li>
+        <li><a href="index.html#on-som">On som</a></li>
+      </ul>
     </nav>
   </header>
 
-  <main class="carta-flip">
-    <!-- Títol: a l'esquerra el text, a la dreta "carta" en japonès (お品書き) en vertical -->
-    <div class="carta-cap">
+  <main id="carta">
+    <div id="carta-titol">
       <div>
         <h1>La carta</h1>
-        <p>Cuina d'autor: tècnica japonesa i producte català de temporada.</p>
+        <p id="carta-subtitol">Cuina d'autor: tècnica japonesa i producte català de temporada.</p>
       </div>
-      <p class="carta-kanji" lang="ja">お品書き</p>
+      <p id="kanji-carta">お品書き</p>
     </div>
 
-    <!-- Botons d'idioma: cada un porta l'enllaç del seu flipbook de Heyzine (js/carta.js) -->
-    <div class="idiomes" role="group" aria-label="Idioma de la carta">
-      <a href="https://heyzine.com/flip-book/33c3527ae2.html" class="idioma" aria-pressed="true" lang="ca">Català</a>
-      <a href="https://heyzine.com/flip-book/ca21bb17c3.html" class="idioma" aria-pressed="false" lang="es">Castellano</a>
-      <a href="https://heyzine.com/flip-book/ca40df68c4.html" class="idioma" aria-pressed="false" lang="en">English</a>
+    <div id="idiomes">
+      <a href="https://heyzine.com/flip-book/33c3527ae2.html" class="idioma actiu">Català</a>
+      <a href="https://heyzine.com/flip-book/ca21bb17c3.html" class="idioma">Castellano</a>
+      <a href="https://heyzine.com/flip-book/ca40df68c4.html" class="idioma">English</a>
     </div>
 
-    <!-- El flipbook és un iframe de Heyzine; per defecte, en català -->
-    <div class="flipbook">
-      <iframe id="flipbook" src="https://heyzine.com/flip-book/33c3527ae2.html"
-              title="La carta de Can Kyoto" allowfullscreen
-              allow="autoplay; fullscreen; clipboard-write" scrolling="no" loading="lazy"></iframe>
-    </div>
+    <iframe id="flipbook" src="https://heyzine.com/flip-book/33c3527ae2.html" title="La carta de Can Kyoto" allowfullscreen></iframe>
 
-    <p class="carta-nota"><a id="pantalla-completa" href="https://heyzine.com/flip-book/33c3527ae2.html" target="_blank" rel="noopener">Obrir la carta a pantalla completa</a></p>
+    <p><a id="pantalla-completa" href="https://heyzine.com/flip-book/33c3527ae2.html" target="_blank">Obrir la carta a pantalla completa</a></p>
   </main>
 
-  <!-- PEU -->
-  <footer class="peu-portada">
+  <footer class="peu">
     <p>Cuina mediterrània i japonesa, amb ànima.</p>
     <nav class="menu-peu">
-      <a href="index.html">Inici</a>
-      <a href="index.html#sala">La sala</a>
-      <a href="carta.html">Carta</a>
-      <a href="reserves.html">Reserves</a>
-      <a href="index.html#on-som">On som</a>
+      <ul>
+        <li><a href="index.html">Inici</a></li>
+        <li><a href="carta.html">Carta</a></li>
+        <li><a href="reserves.html">Reserves</a></li>
+        <li><a href="index.html#on-som">On som</a></li>
+      </ul>
     </nav>
-    <p class="petit">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
+    <p class="copyright">© 2026 Can Kyoto. Projecte ASIX 0379.</p>
   </footer>
 
-  <script src="js/carta.js"></script>
+  <script src="js/carta.js?v=2"></script>
 </body>
 </html>

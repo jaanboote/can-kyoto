@@ -1,69 +1,23 @@
-/* Seccions de la portada (index.html) */
-
 .seccio {
-  padding: 110px 40px;
+  padding: 70px 16px;
 }
+
 .contingut {
   max-width: 1080px;
   margin: 0 auto;
 }
+
 .seccio h2 {
-  font-family: var(--lletra-titols);
-  font-weight: 300;
-  font-size: 42px;
-  line-height: 1.2;
-  margin-bottom: 26px;
+  font-size: 30px;
+  margin-bottom: 24px;
 }
+
 .seccio p {
-  max-width: 520px;
   margin-bottom: 18px;
-  line-height: 1.75;
-  color: var(--text);
 }
 
 .gris {
   background: var(--fons-gris);
-}
-
-.mapa-google {
-  display: block;
-  width: 100%;
-  height: 280px;
-  margin-top: 24px;
-  border: 1px solid var(--linia);
-}
-
-.dues-col {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 70px;
-  align-items: center;
-}
-
-.marc-foto {
-  position: relative;
-}
-.marc-foto::before {
-  content: "";
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: -20px;
-  bottom: -20px;
-  border: 1px solid var(--vermell);
-}
-.marc-foto img {
-  position: relative;
-  display: block;
-  width: 100%;
-}
-
-#cuina .marc-foto {
-  order: -1;
-}
-#cuina .marc-foto::before {
-  left: -20px;
-  right: 20px;
 }
 
 .fosc {
@@ -71,146 +25,134 @@
   color: var(--blanc);
   text-align: center;
 }
-.fosc p {
-  color: var(--gris-suau);
-  margin-left: auto;
-  margin-right: auto;
-}
 
-.passos {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  margin: 56px 0;
-  border-top: 1px solid var(--linia-fosca);
-  border-bottom: 1px solid var(--linia-fosca);
-}
-.pas-taula {
-  padding: 40px 32px;
-}
-.pas-taula + .pas-taula {
-  border-left: 1px solid var(--linia-fosca);
-}
-.pas-taula .num {
-  font-family: var(--lletra-japonesa);
-  font-size: 56px;
-  line-height: 1.2;
-  color: var(--vermell);
-  margin-bottom: 10px;
-}
-.pas-taula h3 {
-  font-family: var(--lletra-titols);
-  font-weight: 400;
-  font-size: 19px;
-  margin-bottom: 10px;
-}
-.pas-taula p {
-  font-size: 15px;
-}
-
-.sala-estat {
-  color: var(--text);
-}
-
-.sala-estat strong {
+#lliures {
   font-family: var(--lletra-titols);
   font-size: 24px;
   font-weight: 400;
   color: var(--verd);
 }
-.punt {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-right: 8px;
-  border-radius: 50%;
-  background: var(--verd);
-  vertical-align: middle;
-}
-#sala .mapa {
-  background-color: var(--blanc);
-}
 
-#sala .llegenda {
-  margin-top: 28px;
-}
-#sala .taula {
-  cursor: default;
-}
-#sala .tauler {
-  transition: background-color 0.6s;
-}
-.boto-sala {
+#sala .boto {
   margin-top: 32px;
 }
 
-.xifres {
+#cuina-graella,
+#on-som-graella,
+#passos,
+#xifres {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+#cuina-foto {
+  width: 100%;
+  outline: 1px solid var(--vermell);
+  outline-offset: 12px;
+}
+
+#passos {
+  margin: 48px 0;
+}
+
+.numero {
+  font-family: var(--lletra-japonesa);
+  font-size: 56px;
+  color: var(--vermell);
+}
+
+.pas p {
+  color: var(--gris-clar);
+}
+
+#xifres {
+  grid-template-columns: 1fr 1fr;
   text-align: center;
+  color: var(--gris);
 }
-.xifra + .xifra {
-  border-left: 1px solid var(--linia);
-}
+
 .xifra strong {
   display: block;
   font-family: var(--lletra-titols);
   font-weight: 300;
-  font-size: 46px;
-}
-.xifra span {
-  font-size: 15px;
-  color: var(--gris);
+  font-size: 36px;
+  color: var(--negre);
 }
 
-.horaris {
-  padding: 44px;
+#mapa-google {
+  width: 100%;
+  height: 280px;
+  border: 1px solid var(--linia);
+}
+
+#horaris {
+  padding: 32px;
   background: var(--blanc);
   border-top: 3px solid var(--vermell);
 }
-.horaris h3 {
-  font-family: var(--lletra-titols);
-  font-weight: 400;
+
+#horaris h3 {
   font-size: 22px;
-  margin-bottom: 20px;
-}
-.horaris .fila {
-  display: flex;
-  justify-content: space-between;
-  max-width: none;
-  padding: 14px 0;
-  margin: 0;
-  border-bottom: 1px solid var(--linia);
-}
-.horaris .boto {
-  display: block;
-  margin-top: 30px;
-  text-align: center;
+  margin-bottom: 16px;
 }
 
-@media (max-width: 760px) {
+#horaris .fila {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  margin: 0 0 24px;
+  border-bottom: 1px solid var(--linia);
+}
+
+@media screen and (min-width: 1000px) {
   .seccio {
-    padding: 70px 20px;
+    padding: 110px 40px;
   }
+
   .seccio h2 {
-    font-size: 30px;
+    font-size: 42px;
   }
-  .dues-col,
-  .passos {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
-  }
-  .pas-taula + .pas-taula {
-    border-left: 0;
-    border-top: 1px solid var(--linia-fosca);
-  }
-  .xifres {
+
+  #cuina-graella {
     grid-template-columns: 1fr 1fr;
-    row-gap: 30px;
+    grid-template-areas: "FOTO TEXT";
+    gap: 70px;
+    align-items: center;
   }
-  .xifra:nth-child(3) {
-    border-left: 0;
+
+  #cuina-foto {
+    grid-area: FOTO;
   }
+
+  #cuina-text {
+    grid-area: TEXT;
+  }
+
+  #on-som-graella {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "ADRECA HORARIS";
+    gap: 70px;
+    align-items: center;
+  }
+
+  #adreca {
+    grid-area: ADRECA;
+  }
+
+  #horaris {
+    grid-area: HORARIS;
+  }
+
+  #passos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #xifres {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   .xifra strong {
-    font-size: 36px;
+    font-size: 46px;
   }
 }

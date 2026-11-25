@@ -1,79 +1,38 @@
-/* Portada (index.html): la primera pantalla */
-
-.hero {
+#portada {
   position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 24px 40px;
+  padding: 24px 16px;
   background: var(--negre);
   color: var(--blanc);
   text-align: center;
   overflow: hidden;
 }
 
-.menu {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 36px;
-}
-.menu a {
-  color: var(--blanc);
-  text-decoration: none;
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid transparent;
-}
-.menu a:hover {
-  border-bottom-color: var(--vermell);
-}
-
-.menu .menu-reserva {
+.boto-menu {
   padding: 8px 20px;
   border: 1px solid var(--vermell);
 }
-.menu .menu-reserva:hover {
-  background: var(--vermell);
+
+#kanji {
+  display: none;
 }
 
-.kanji {
-  position: absolute;
-  left: 48px;
-  top: 50%;
-  margin-top: -110px;
-  writing-mode: vertical-rl;
-  font-family: var(--lletra-japonesa);
-  font-size: 72px;
-  line-height: 1;
-  letter-spacing: 24px;
-  color: var(--vermell);
-}
-
-.cercle {
+#cercle {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 600px;
-  height: 600px;
-  margin-top: -320px;
-  margin-left: -300px;
-  border-style: solid;
-  border-color: var(--vermell-mig);
+  width: 340px;
+  height: 340px;
+  margin-top: -190px;
+  margin-left: -170px;
+  border: 6px solid var(--vermell-fosc);
   border-top-color: transparent;
-  border-width: 0 3px 11px 6px;
-  filter: url(#pinzell);
   border-radius: 50%;
 }
 
-.filtres {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-.hero-centre {
+#portada-centre {
   position: relative;
   flex: 1;
   display: flex;
@@ -82,45 +41,48 @@
   justify-content: center;
   gap: 28px;
 }
-.logo {
-  width: 440px;
-  max-width: 80%;
+
+#logo {
+  width: 80%;
+  max-width: 440px;
 }
-.subtitol {
+
+#subtitol {
   font-family: var(--lletra-titols);
   font-style: italic;
-  font-size: 21px;
-  letter-spacing: 0.5px;
+  font-size: 20px;
 }
-.hero-botons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-}
-.hero-peu {
+
+#barri {
   font-size: 14px;
-  letter-spacing: 1px;
   color: var(--gris-clar);
 }
 
-@media (max-width: 760px) {
-  .hero {
-    padding-left: 20px;
-    padding-right: 20px;
+@media screen and (min-width: 1000px) {
+  #portada {
+    padding: 24px 40px;
   }
-  .menu {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 18px;
+
+  #portada .menu ul {
+    justify-content: flex-end;
   }
-  .kanji {
-    display: none;
+
+  #kanji {
+    display: block;
+    position: absolute;
+    left: 48px;
+    top: 40%;
+    writing-mode: vertical-rl;
+    font-family: var(--lletra-japonesa);
+    font-size: 72px;
+    letter-spacing: 24px;
+    color: var(--vermell);
   }
-  .cercle {
-    width: 340px;
-    height: 340px;
-    margin-top: -190px;
-    margin-left: -170px;
+
+  #cercle {
+    width: 600px;
+    height: 600px;
+    margin-top: -320px;
+    margin-left: -300px;
   }
 }
