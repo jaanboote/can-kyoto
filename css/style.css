@@ -522,6 +522,9 @@ textarea { resize: vertical; }
    Els botons canvien l'idioma (js/carta.js)
    ========================================================== */
 
+/* A la carta la capçalera no queda fixa: el flipbook necessita tota l'alçada */
+.pag-carta .cap { position: static; }
+
 .carta-flip { max-width: 1200px; margin: 0 auto; padding: 48px 16px 72px; }
 .carta-flip h1 { font-family: var(--lletra-titols); font-weight: 400; font-size: 40px; }
 
