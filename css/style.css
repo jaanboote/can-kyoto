@@ -1,10 +1,9 @@
-/* ==========================================================
-   Can Kyoto: full d'estils de tota la web
-   Colors de la guia d'estil: negre #0B0B0B, blanc #FFFFFF i vermell #BC002D
-   ========================================================== */
+/*  negre #0B0B0B
+blanc #FFFFFF
+vermell #BC002D
+*/
 
 :root {
-  /* Colors: es canvien aquí i canvien a tota la web */
   --negre: #0B0B0B;
   --blanc: #FFFFFF;
   --vermell: #BC002D;
@@ -24,20 +23,23 @@
   --taula-petita: #D1D5DB;
   --text-taula-petita: #4B5563;
   --vermell-mig: rgba(188, 0, 45, 0.5);
-
-  /* Lletres */
   --lletra-text: "Ubuntu", sans-serif;
   --lletra-titols: "Merriweather", serif;
   --lletra-japonesa: "Zen Kaku Gothic New", sans-serif;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; 
+   margin: 0; 
+   padding: 0; 
+  }
 
-/* Res no pot fer sortir la pàgina pels costats (scroll lateral al mòbil) */
-html, body { overflow-x: clip; }
+html, body { 
+   overflow-x: clip; 
+}
 
-/* Contorn visible quan es navega amb el teclat, a totes les pàgines */
-:focus-visible { outline: 2px solid var(--vermell); outline-offset: 2px; }
+:focus-visible { 
+   outline: 2px solid var(--vermell); outline-offset: 2px; 
+}
 
 body {
   font-family: var(--lletra-text);
@@ -47,17 +49,11 @@ body {
   background: var(--blanc);
 }
 
-/* ==========================================================
-   Portada (index.html)
-   ========================================================== */
 
-/* Estil japonès minimalista: molt d'espai, línies fines i el vermell només per destacar */
-
-/* ---------- Portada ---------- */
 .hero {
-  position: relative;          /* perquè el cercle i el kanji es col·loquin dins */
-  min-height: 100vh;           /* per als navegadors antics */
-  min-height: 100svh;          /* ocupa la pantalla sense quedar tallat per la barra del mòbil */
+  position: relative;          
+  min-height: 100vh;         
+  min-height: 100svh;        
   display: flex;
   flex-direction: column;
   padding: 24px 40px;
@@ -67,7 +63,6 @@ body {
   overflow: hidden;
 }
 
-/* Menú de dalt a la dreta, dins de la portada (no queda fix: marxa quan baixes) */
 .menu {
   display: flex;
   justify-content: flex-end;
@@ -82,17 +77,22 @@ body {
   padding-bottom: 4px;
   border-bottom: 1px solid transparent;
 }
-.menu a:hover { border-bottom-color: var(--vermell); }
+.menu a:hover {
+   border-bottom-color: var(--vermell); 
+}
 
-.menu .menu-reserva { padding: 8px 20px; border: 1px solid var(--vermell); }
-.menu .menu-reserva:hover { background: var(--vermell); }
+.menu .menu-reserva {
+   padding: 8px 20px; border: 1px solid var(--vermell);
+}
+.menu .menu-reserva:hover {
+   background: var(--vermell);
+}
 
-/* "Kioto" en japonès, escrit en vertical: és l'element protagonista de la portada */
 .kanji {
   position: absolute;
   left: 48px;
   top: 50%;
-  margin-top: -110px;          /* la meitat de l'alçada del text: queda centrat */
+  margin-top: -110px;          
   writing-mode: vertical-rl;
   font-family: var(--lletra-japonesa);
   font-size: 72px;
@@ -101,36 +101,35 @@ body {
   color: var(--vermell);
 }
 
-/* Cercle darrere del logo en forma d'ensō: el cercle japonès pintat d'un sol traç de pinzell,
-   que es deixa obert. El tros de dalt és transparent i les puntes s'aprimen soles. */
 .cercle {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 600px;
   height: 600px;
-  margin-top: -320px;          /* la meitat de l'alçada, una mica més amunt */
-  margin-left: -300px;         /* la meitat de l'amplada: queda centrat */
+  margin-top: -320px;          
+  margin-left: -300px;         
   border-style: solid;
   border-color: var(--vermell-mig);
-  border-top-color: transparent;   /* l'obertura de l'ensō: així també es veu que gira */
-  /* Cada costat té un gruix diferent (dalt, dreta, baix, esquerra):
-     el traç s'engruixeix i s'aprima com una pinzellada */
+  border-top-color: transparent;   
   border-width: 0 3px 11px 6px;
-  filter: url(#pinzell);           /* vores irregulars de pinzell (filtre SVG de l'index.html) */
+  filter: url(#pinzell);          
   border-radius: 50%;
-  animation: girar 60s linear infinite;   /* una volta per minut */
+  animation: girar 60s linear infinite;   
 }
 
 @keyframes girar {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { 
+     transform: rotate(0deg);
+  }
+  to { 
+     transform: rotate(360deg); 
+  }
 }
 
-/* L'SVG només guarda el filtre: no ha d'ocupar espai */
+
 .filtres { position: absolute; width: 0; height: 0; }
 
-/* Si l'usuari té activat "reduir moviment" al sistema, el cercle no gira */
 @media (prefers-reduced-motion: reduce) {
   .cercle { animation: none; }
 }
