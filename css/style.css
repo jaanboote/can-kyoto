@@ -258,7 +258,6 @@ body {
 
 /* Peu (el mateix a totes les pàgines) */
 .peu-portada { padding: 64px 24px 48px; background: var(--negre); color: var(--gris-suau); text-align: center; font-size: 15px; }
-.logo-peu { width: 130px; margin-bottom: 18px; }
 .menu-peu { display: flex; justify-content: center; gap: 28px; margin-top: 20px; }
 .menu-peu a { color: var(--blanc); text-decoration: none; }
 .menu-peu a:hover { color: var(--vermell); }
