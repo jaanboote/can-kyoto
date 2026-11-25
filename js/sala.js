@@ -20,24 +20,8 @@ function pintarSala() {
     const assegudes = gent[t.num] || 0;
     if (assegudes === 0) lliures++;
 
-    // Cadires: la meitat a dalt i la meitat a baix. Les ocupades surten plenes.
-    let cadires = "";
-    const meitat = t.places / 2;
-    for (let i = 0; i < t.places; i++) {
-      const costat = i < meitat ? "dalt" : "baix";
-      const posicio = ((i % meitat) + 0.5) / meitat * 100;
-      const plena = i < assegudes ? " plena" : "";
-      cadires += '<i class="cadira ' + costat + plena + '" style="left:' + posicio + '%"></i>';
-    }
-
-    const div = document.createElement("div");
-    div.className = "taula " + (assegudes > 0 ? "ocupada" : "lliure");
-    div.style.left = t.x + "%";
-    div.style.top = t.y + "%";
-    div.style.width = t.amplada + "%";
-    div.style.height = t.alcada + "%";
-    const text = assegudes > 0 ? assegudes + "/" + t.places : t.places + " places";
-    div.innerHTML = cadires + '<span class="tauler"><b>T' + t.num + "</b><span>" + text + "</span></span>";
+    const div = crearTaula("div", t, assegudes);
+    div.classList.add(assegudes > 0 ? "ocupada" : "lliure");
     mapa.appendChild(div);
   }
 

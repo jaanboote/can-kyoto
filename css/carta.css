@@ -1,0 +1,98 @@
+/* Carta (carta.html): flipbook de Heyzine dins d'un iframe */
+
+.carta-flip {
+  background: var(--negre);
+  color: var(--blanc);
+  padding: 56px 16px 72px;
+}
+.carta-flip > * {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.carta-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+.carta-cap h1 {
+  font-family: var(--lletra-titols);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.1;
+}
+.carta-cap p {
+  margin-top: 12px;
+  color: var(--gris-suau);
+}
+.carta-cap .carta-kanji {
+  margin-top: 0;
+  font-family: var(--lletra-japonesa);
+  writing-mode: vertical-rl;
+  font-size: 26px;
+  letter-spacing: 10px;
+  color: var(--vermell);
+}
+
+.idiomes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 32px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--linia-fosca);
+}
+.idioma {
+  padding: 10px 0;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  color: var(--gris-clar);
+  text-decoration: none;
+  font-size: 15px;
+}
+.idioma:hover {
+  color: var(--blanc);
+}
+.idioma[aria-pressed="true"] {
+  color: var(--blanc);
+  border-bottom-color: var(--vermell);
+}
+
+.flipbook {
+  aspect-ratio: 3 / 2;
+  max-height: 85vh;
+  width: 100%;
+  background: var(--negre);
+}
+.flipbook iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.carta-nota {
+  margin-top: 20px;
+  font-size: 14px;
+}
+.carta-nota a {
+  color: var(--gris-suau);
+}
+.carta-nota a:hover {
+  color: var(--vermell);
+}
+
+@media (max-width: 760px) {
+  .flipbook {
+    aspect-ratio: 3 / 4;
+  }
+  .carta-cap h1 {
+    font-size: 36px;
+  }
+  .carta-cap .carta-kanji {
+    font-size: 20px;
+    letter-spacing: 6px;
+  }
+}

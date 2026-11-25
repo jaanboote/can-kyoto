@@ -1,0 +1,168 @@
+/* Plànol de la sala amb les taules (portada i reserves) */
+
+.llegenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--text);
+}
+.quadre {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.quadre.lliure {
+  background: var(--verd);
+}
+.quadre.ocupada {
+  background: var(--vermell);
+}
+.quadre.petita {
+  background: var(--taula-petita);
+}
+.quadre.assegut {
+  height: 8px;
+  border-radius: 5px 5px 2px 2px;
+  background: var(--vermell);
+}
+
+.mapa-scroll {
+  overflow-x: auto;
+}
+.mapa {
+  position: relative;
+  min-width: 640px;
+  height: 360px;
+  border: 3px solid var(--negre);
+  background-color: var(--blanc);
+
+  background-image: linear-gradient(var(--quadricula) 1px, transparent 1px),
+    linear-gradient(90deg, var(--quadricula) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+.zona {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.zona.entrada {
+  left: 0;
+  top: 0;
+  width: 16.7%;
+  height: 100%;
+  border-right: 1px dashed var(--gris-suau);
+  background: var(--blanc);
+  color: var(--gris);
+}
+
+.zona.entrada::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: 40%;
+  width: 3px;
+  height: 20%;
+  background: var(--vermell);
+}
+
+.zona.barra {
+  left: 70%;
+  top: 84%;
+  width: 30%;
+  height: 16%;
+  border-top: 3px solid var(--negre);
+  background: var(--quadricula);
+  color: var(--negre);
+}
+
+.taula {
+  position: absolute;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+.taula:disabled {
+  cursor: not-allowed;
+}
+.tauler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--blanc);
+  font-size: 12px;
+  line-height: 1.3;
+}
+.tauler b {
+  font-family: var(--lletra-titols);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.cadira {
+  position: absolute;
+  width: 14px;
+  height: 8px;
+  margin-left: -7px;
+  border: 2px solid;
+  background: var(--blanc);
+}
+.cadira.dalt {
+  top: -12px;
+  border-radius: 6px 6px 2px 2px;
+}
+.cadira.baix {
+  bottom: -12px;
+  border-radius: 2px 2px 6px 6px;
+}
+
+.lliure .tauler {
+  background: var(--verd);
+}
+.lliure .cadira {
+  border-color: var(--verd);
+}
+.ocupada .tauler {
+  background: var(--vermell);
+}
+.ocupada .cadira {
+  border-color: var(--vermell);
+}
+.ocupada .cadira.plena {
+  background: var(--vermell);
+}
+.petita .tauler {
+  background: var(--taula-petita);
+  color: var(--text-taula-petita);
+}
+.petita .cadira {
+  border-color: var(--taula-petita);
+}
+.triada .tauler {
+  background: var(--negre);
+}
+.triada .cadira {
+  border-color: var(--negre);
+}
+.lliure:hover .tauler {
+  background: var(--verd-fosc);
+}
+
+.triada .tauler {
+  outline: 2px solid var(--vermell);
+  outline-offset: 5px;
+}
