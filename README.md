@@ -15,7 +15,6 @@ Projecte ASIX 0379 (curs 26/27) de Jan i Josep. Publicada amb GitHub Pages.
 - `js/taules.js`: la llista de les 10 taules (número, places i posició al plànol). La fan servir les dues pàgines.
 - `js/sala.js`: pinta el plànol de la portada amb les taules lliures i ocupades.
 - `js/reserves.js`: el procés de reserva.
-- `js/menu.js`: ensenya el logo petit al menú de la portada quan baixes.
 - `js/carta.js`: canvia l'idioma del flipbook de la carta.
 - `img/`: logotip i foto de la sala.
 - `php/`: reservat per a la part de servidor.

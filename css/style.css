@@ -67,23 +67,13 @@ body {
   overflow: hidden;
 }
 
-/* Menú de dalt a la dreta: fix, es queda a dalt quan baixes per la pàgina */
+/* Menú de dalt a la dreta, dins de la portada (no queda fix: marxa quan baixes) */
 .menu {
-  position: fixed;             /* fix a la finestra (sticky no serveix: el menú és dins de la portada) */
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;                 /* per sobre de les seccions */
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 36px;
-  padding: 20px 40px;
-  background: var(--negre);         /* fons negre perquè es llegeixi a sobre de les seccions blanques */
 }
-
-/* Quan cliques un enllaç (#cuina...), la secció no queda tapada pel menú fix */
-html { scroll-padding-top: 90px; }
 .menu a {
   color: var(--blanc);
   text-decoration: none;
@@ -94,13 +84,6 @@ html { scroll-padding-top: 90px; }
 }
 .menu a:hover { border-bottom-color: var(--vermell); }
 
-/* Logo petit a l'esquerra del menú: margin-right auto l'empeny a l'esquerra i els enllaços a la dreta */
-.menu .logo-menu { margin-right: auto; padding: 0; border: 0; }
-.logo-menu img { display: block; height: 44px; }
-
-/* A dalt de tot ja es veu el logo gran de la portada: el petit només surt quan baixes (js/menu.js) */
-.menu .logo-menu { opacity: 0; transition: opacity 0.3s; }
-.menu.avall .logo-menu { opacity: 1; }
 .menu .menu-reserva { padding: 8px 20px; border: 1px solid var(--vermell); }
 .menu .menu-reserva:hover { background: var(--vermell); }
 
@@ -284,10 +267,7 @@ html { scroll-padding-top: 90px; }
 /* ---------- Mòbil ---------- */
 @media (max-width: 760px) {
   .hero, .seccio { padding-left: 20px; padding-right: 20px; }
-  .menu { justify-content: center; flex-wrap: wrap; gap: 18px; padding: 14px 20px; }
-  .menu .logo-menu { margin-right: 0; width: 100%; display: flex; justify-content: center; }   /* al mòbil, el logo a dalt i els enllaços a sota */
-  .logo-menu img { height: 36px; }
-  html { scroll-padding-top: 140px; }   /* al mòbil el menú fa dues files i és més alt */
+  .menu { justify-content: center; flex-wrap: wrap; gap: 18px; }
   .kanji { display: none; }
   .cercle { width: 340px; height: 340px; margin-top: -190px; margin-left: -170px; }
   .seccio { padding-top: 70px; padding-bottom: 70px; }
@@ -312,9 +292,6 @@ html { scroll-padding-top: 90px; }
   align-items: center;
   padding: 20px 40px;
   background: var(--negre);
-  position: sticky;   /* es queda enganxada a dalt quan baixes per la pàgina */
-  top: 0;
-  z-index: 10;        /* per sobre del mapa i de la resta del contingut */
 }
 .logo-cap { height: 52px; }
 .menu-reserves { display: flex; gap: 32px; }
@@ -521,9 +498,6 @@ textarea { resize: vertical; }
    La carta és un flipbook de Heyzine dins d'un iframe.
    Els botons canvien l'idioma (js/carta.js)
    ========================================================== */
-
-/* A la carta la capçalera no queda fixa: el flipbook necessita tota l'alçada */
-.pag-carta .cap { position: static; }
 
 .carta-flip { max-width: 1200px; margin: 0 auto; padding: 48px 16px 72px; }
 .carta-flip h1 { font-family: var(--lletra-titols); font-weight: 400; font-size: 40px; }
